@@ -27,7 +27,7 @@ This Internal Employee Directory is a modern, full-stack web application designe
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 
-## High Level Diagram
+## High Level Design
 
 ![Alt Text](https://i.imgur.com/S7Fwpg1.jpeg)
 
