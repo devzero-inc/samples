@@ -1,0 +1,32 @@
+{
+    "name": "Devzero.io",
+    "position": "",
+    "children": [
+        {
+            "name": "Debosmit Ray",
+            "position": "CEO",
+            "children": [
+                {
+                    "name": "Shani Shoham",
+                    "position": "Advisor",
+                    "children": [
+                        {
+                            "name": "Stuti Biyani",
+                            "position": "Member of Technical Staff"
+                        }
+                    ]
+                },
+                {
+                    "name": "Everton Moreth",
+                    "position": "Solutions Engineer",
+                    "children": [
+                        {
+                            "name": "Renato Nouman",
+                            "position": "Senior Software Engineer"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
