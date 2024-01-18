@@ -1,0 +1,32 @@
+{
+    "name": "Sample Org",
+    "position": "",
+    "children": [
+        {
+            "name": "Alex Johnson",
+            "position": "CEO",
+            "children": [
+                {
+                    "name": "Daniel Smith",
+                    "position": "Data Scientist",
+                    "children": [
+                        {
+                            "name": "Emily Clark",
+                            "position": "Product Manager"
+                        }
+                    ]
+                },
+                {
+                    "name": "Michael Turner",
+                    "position": "Software Architect",
+                    "children": [
+                        {
+                            "name": "Samantha Davis",
+                            "position": "Chief Marketing Officer"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
