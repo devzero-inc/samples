@@ -11,7 +11,7 @@ services:
 
   # Node API service
   api: 
-    build: .
+    build: ./backend
     ports: 
       - 8000:8000
     environment:
@@ -19,6 +19,14 @@ services:
       PORT: 8000
     depends_on:
       - mongo_db
+
+  # React Frontend service
+  front_end:
+    build: ./frontend
+    ports:
+      - 5173:5173
+    depends_on:
+      - api
 
 volumes:
   mongo_db: {}

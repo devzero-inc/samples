@@ -3,9 +3,17 @@
 ## Overview
 This Internal Employee Directory is a modern, full-stack web application designed to manage and display employee information within an organization. It leverages a MongoDB database for efficient data storage, Node.js and Express.js for a robust server-side environment, and React.js with Tailwind CSS for an interactive and responsive client-side experience.
 
+## Table of contents
+- [TODO](#todo)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [High Level Design](#high-level-design)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+
+
 ## TODO:
 1. Writing unit test
-2. dockerizing front end
 3. CI CD pipeline
 4. Local lint and pre commit hook
 
@@ -21,11 +29,6 @@ This Internal Employee Directory is a modern, full-stack web application designe
 - **Backend:** Node.js, Express.js, Mongoose ODM
 - **Frontend:** React.js, Tailwind CSS
 
-## Table of contents
-
-- [High Level Diagram](#high-level-diagram)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
 
 ## High Level Design
 
@@ -44,37 +47,24 @@ Frontend: For the client-side development, we have employed React.js, a powerful
 
 ### Prerequisites
 - Docker
-- Node.js
 ## Installation
 
 Dependencies:
 ```
 Docker version - 24.0.7
-Node version - 20.9.0
 ```
 
 
 Run locally: 
 ```bash
-git clone https://github.com/ScaleupInfra/devzero-nodejs-mongo-react.git
-cd devzero-nodejs-mongo-react
+git clone https://github.com/devzero-inc/samples.git
+cd samples/internal-employee-directory
+docker compose up -d
 ```
-To get the backend running:
-```bash
-cd backend
-docker compose up
-```
-Backend will run on PORT ```8000``` -> [http://localhost:8000/](http://localhost:8000/)
+Backend will be running on ```PORT:8000``` (you can test it by going to localhost:8000/test) -> [http://localhost:8000/](http://localhost:8000/)
 
-To get the frontend running:
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Frontend will run on PORT ```5173``` [http://localhost:5173/](http://localhost:5173/)
+Frontend will be running on ```PORT:5173``` -> [http://localhost:5173/](http://localhost:5173/)
 
-Now you can go to: 
-[http://localhost:5173/](http://localhost:5173/)
+Now just go to [http://localhost:5173/](http://localhost:5173/) and explore the application.
 
 
