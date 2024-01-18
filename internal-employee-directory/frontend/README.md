@@ -1,8 +1,20 @@
-# React + Vite
+# Internal Employee Directory Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This Employee Directory frontend is developed using React for its robust and dynamic user interface capabilities, complemented by Tailwind CSS for its sleek design elements. It offers an intuitive and efficient way to manage and display employee information within an organization.
 
-Currently, two official plugins are available:
+## Technologies Used
+- **React.js**
+- **Tailwind CSS**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
+- Node.js
+
+## Installation
+Run locally: 
+```bash
+cd frontend
+npm install
+npm run dev
+```
+It will run on PORT ```5173``` [http://localhost:5173/](http://localhost:5173/)

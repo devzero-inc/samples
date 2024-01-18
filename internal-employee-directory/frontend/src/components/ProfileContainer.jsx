@@ -5,8 +5,14 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const ProfileContainer = (props) => {
 
-    const handleProfile = () => {
-        window.open(props.employee.profiles.linkedIn, '_blank');
+    const handleGithubProfile = () => {
+        if (props.employee.profiles.github)
+            window.open(props.employee.profiles.github, '_blank');
+    }
+
+    const handleLinkedInProfile = () => {
+        if (props.employee.profiles.linkedIn)
+            window.open(props.employee.profiles.linkedIn, '_blank');
     }
 
     return (
@@ -16,7 +22,7 @@ const ProfileContainer = (props) => {
              object-cover shadow-2xl'>
             <div className=' w-full'>
                 <div className='h-60 w-full'>
-                    <img src={props.employee.profilePicture ?  props.employee.profilePicture : sample} alt="" className=' object-cover h-full w-full' />
+                    <img src={props.employee.profilePicture ? props.employee.profilePicture : sample} alt="" className=' object-cover h-full w-full' />
                 </div>
                 <div className=' p-2'>
                     <h1 className=' text-3xl font-bold'>About</h1>
@@ -30,9 +36,11 @@ const ProfileContainer = (props) => {
                     <GitHubIcon />
                     <h1>Github</h1>
                 </div> */}
-                <div className='flex-1 flex items-center gap-2 border rounded-md
+                <div 
+                    className='flex-1 flex items-center gap-2 border rounded-md
                               border-black px-2 py-1 justify-center cursor-pointer
                                 transition duration-300 ease-in-out hover:bg-black hover:text-white'
+                    onClick={handleGithubProfile}
                 >
                     <GitHubIcon className='' />
                     <h1 className=''>Github</h1>
@@ -42,7 +50,7 @@ const ProfileContainer = (props) => {
                     className='flex-1 flex items-center gap-2 border rounded-md
                               border-black px-2 py-1 justify-center cursor-pointer
                                 transition duration-300 ease-in-out hover:bg-black hover:text-white'
-                    onClick={handleProfile}
+                    onClick={handleLinkedInProfile}
                 >
                     <LinkedInIcon />
                     <h1>LinkedIn</h1>

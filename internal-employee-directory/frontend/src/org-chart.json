@@ -1,28 +1,28 @@
 {
-    "name": "Devzero.io",
+    "name": "Sample Org",
     "position": "",
     "children": [
         {
-            "name": "Debosmit Ray",
+            "name": "Alex Johnson",
             "position": "CEO",
             "children": [
                 {
-                    "name": "Shani Shoham",
-                    "position": "Advisor",
+                    "name": "Daniel Smith",
+                    "position": "Data Scientist",
                     "children": [
                         {
-                            "name": "Stuti Biyani",
-                            "position": "Member of Technical Staff"
+                            "name": "Emily Clark",
+                            "position": "Product Manager"
                         }
                     ]
                 },
                 {
-                    "name": "Everton Moreth",
-                    "position": "Solutions Engineer",
+                    "name": "Michael Turner",
+                    "position": "Software Architect",
                     "children": [
                         {
-                            "name": "Renato Nouman",
-                            "position": "Senior Software Engineer"
+                            "name": "Samantha Davis",
+                            "position": "Chief Marketing Officer"
                         }
                     ]
                 }
