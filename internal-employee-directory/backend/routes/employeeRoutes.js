@@ -6,7 +6,7 @@ const employeeService = new EmployeeService();
 router.get('/get-all', async (req, res) => {
     try {
         const allEmployees = await employeeService.getAllEmployees();
-        if(!allEmployees){
+        if(!allEmployees || allEmployees.length === 0){
             return res.status(404).json({ message: "Employees not found!" });
         }
         res.status(200).json({ employees: allEmployees });
