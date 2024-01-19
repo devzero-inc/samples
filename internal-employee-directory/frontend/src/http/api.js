@@ -1,8 +1,8 @@
-import axios from "axios";
+import AxiosService from "../service/axiosService";
 
 const getAllEmployees = async () => {
     try {
-        const employeesArr = await axios.get('http://localhost:8000/api/employees/get-all');
+        const employeesArr = await AxiosService.get('http://localhost:8000/api/employees/get-all');
         const sortedEmployees = employeesArr.data.employees.sort((a, b) => {
             return a.name.localeCompare(b.name);
         });
@@ -14,7 +14,7 @@ const getAllEmployees = async () => {
 
 const getOneEmployee = async (id) => {
     try {
-        const employee = await axios.get(`http://localhost:8000/api/employees/get-one/?id=${id}`);
+        const employee = await AxiosService.get(`http://localhost:8000/api/employees/get-one/?id=${id}`);
         return employee.data.employee;
     } catch (error) {
         console.log(error);

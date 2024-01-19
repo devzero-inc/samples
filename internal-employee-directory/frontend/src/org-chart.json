@@ -13,16 +13,28 @@
                         {
                             "name": "Emily Clark",
                             "position": "Product Manager"
+                        },
+                        {
+                            "name": "Lucas Brown",
+                            "position": "Data Analyst"
                         }
                     ]
                 },
                 {
                     "name": "Michael Turner",
-                    "position": "Software Architect",
+                    "position": "Software Architect"
+                },
+                {
+                    "name": "Sarah Miller",
+                    "position": "Head of Operations",
                     "children": [
                         {
-                            "name": "Samantha Davis",
-                            "position": "Chief Marketing Officer"
+                            "name": "James Wilson",
+                            "position": "Operations Manager"
+                        },
+                        {
+                            "name": "Isabella Martinez",
+                            "position": "Logistics Coordinator"
                         }
                     ]
                 }
