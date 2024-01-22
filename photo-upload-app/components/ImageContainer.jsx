@@ -1,12 +1,12 @@
 import Image from "next/image";
 
-const ImageContainer = () => {
+const ImageContainer = ({img}) => {
     return (
-        <div className=" col-span-1 h-full w-full">
+        <div className=" col-span-1 row-span-1 h-full w-full">
             <Image 
-                src="/assets/sample.jpg"
+                src={`/assets/sample${img}.jpg`}
                 alt="Devzero"
-                style={{objectFit: "contain", borderRadius: "0.5rem"}}
+                style={{objectFit: "cover", borderRadius: "0.5rem", height: "100%", width: "100%"}}
                 width={400}
                 height={400}
             />

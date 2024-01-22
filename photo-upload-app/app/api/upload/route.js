@@ -22,11 +22,10 @@ export async function POST(req) {
     // Save the file
     fs.writeFileSync(filePath, buffer);
     return NextResponse.json(
-      { message: "File uploaded successfully" },
-      { status: 200 }
+      { message: "File uploaded successfully", status: 200 },
     );
   } catch (error) {
     console.error("Error saving file:", error);
-    return NextResponse.json({ message: "Error saving file" }, { status: 500 });
+    return NextResponse.json({ message: "Error saving file", status: 500 });
   }
 }
