@@ -18,16 +18,19 @@ jobs:
 
     - name: Install backend dependencies
       run: |
+        cd internal-employee-directory
         cd backend
         npm install
 
     - name: Lint backend code
       run: |
+        cd internal-employee-directory
         cd backend
         npm run lint
 
     - name: Run backend tests
       run: |
+        cd internal-employee-directory
         cd backend
         npm test
 
@@ -42,15 +45,18 @@ jobs:
 
     - name: Install frontend dependencies
       run: |
+        cd internal-employee-directory
         cd frontend
         npm install
 
     - name: Lint frontend code
       run: |
+        cd internal-employee-directory
         cd frontend
         npm run lint
 
     - name: Run frontend tests
       run: |
+        cd internal-employee-directory
         cd frontend
         npm test
