@@ -12,6 +12,14 @@ export async function POST(req) {
         { status: 400 }
       );
     }
+
+    const validMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!validMimeTypes.includes(file.type)) {
+      return NextResponse.json(
+        { message: "File is not a valid image" },
+        { status: 400 }
+      );
+    }
     
     const byteData = await file.arrayBuffer();
     const buffer = Buffer.from(byteData);
