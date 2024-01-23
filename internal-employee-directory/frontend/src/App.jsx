@@ -7,6 +7,7 @@ import { getAllEmployees } from './http/api';
 const App = () => {
 
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [currentEmployee, setCurrentEmployee] = useState("DZ001");
   const [showTree, setShowTree] = useState(false);
 
@@ -16,9 +17,14 @@ const App = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    setFilteredEmployees(employees);
+}, [employees])
+
   return (
     <div className='flex relative font-mono'>
-      {employees && <Sidebar employees={employees} setCurrentEmployee={setCurrentEmployee} />}
+      {employees && <Sidebar employees={employees} setCurrentEmployee={setCurrentEmployee}
+                             filteredEmployees={filteredEmployees} setFilteredEmployees={setFilteredEmployees} />}
       {currentEmployee && <EmployeePage currentEmployee={currentEmployee} setShowTree={setShowTree}/>}
       {showTree &&
         <div className={`z-20 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2

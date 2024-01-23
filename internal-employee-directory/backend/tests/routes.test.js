@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 const app = require('../app');
 const request = require('supertest');
 const EmployeeService = require('../service/employeeService');

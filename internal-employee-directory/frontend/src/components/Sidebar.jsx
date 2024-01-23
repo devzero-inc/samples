@@ -3,14 +3,9 @@ import Logo from '../assets/devzero_logo.png';
 import EmployeeCard from './EmployeeCard';
 import SearchIcon from './SearchIcon';
 
-const Sidebar = ({ employees, setCurrentEmployee }) => {
+const Sidebar = ({ employees, setCurrentEmployee, filteredEmployees, setFilteredEmployees }) => {
 
     const [search, setSearch] = useState('');
-    const [filteredEmployees, setFilteredEmployees] = useState([]);
-
-    useEffect(() => {
-        setFilteredEmployees(employees);
-    }, [employees])
 
     useEffect(() => {
         if (employees) {
@@ -23,7 +18,7 @@ const Sidebar = ({ employees, setCurrentEmployee }) => {
                 })
             );
         }
-    }, [search])
+    }, [search, employees, setFilteredEmployees])
 
     return (
         <div className=' bg-cusPrimary w-[20%] h-screen overflow-auto flex flex-col text-cusTextPrime '>
