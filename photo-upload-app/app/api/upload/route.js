@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import { join } from "path";
+import pool from "../../../lib/db";
+import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(req) {
   try {
@@ -24,13 +26,20 @@ export async function POST(req) {
     const byteData = await file.arrayBuffer();
     const buffer = Buffer.from(byteData);
 
-    const uploadDir = "./public/uploads"; // Ensure this directory exists
-    const filePath = join(uploadDir, file.name);
+    const uniqueFileName =  uuidv4() + "-" + file.name;
+    
+    const uploadDir = "./public/uploads";
+    const filePath = join(uploadDir, uniqueFileName);
 
     // Save the file
     fs.writeFileSync(filePath, buffer);
+
+    const query = 'INSERT INTO images (name, path, type) VALUES ($1, $2, $3)';
+    const values = [uniqueFileName, filePath, file.type];
+    await pool.query(query, values);
+
     return NextResponse.json(
-      { message: "File uploaded successfully", status: 200 },
+      { message: "File uploaded successfully", name: uniqueFileName, status: 200 },
     );
   } catch (error) {
     console.error("Error saving file:", error);
