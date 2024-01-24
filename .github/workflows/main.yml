@@ -3,9 +3,12 @@ name: Internal Employee CI
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'internal-employee-directory/**'
   pull_request:
     branches: [ main ]
-
+    paths:
+      - 'internal-employee-directory/**'
 jobs:
   backend:
     runs-on: ubuntu-latest
