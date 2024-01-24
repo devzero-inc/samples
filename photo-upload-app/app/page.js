@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Form from "@components/Form";
+import Confirm from "@components/Confirm";
 import sampleImages from "@public/assets/sample-images/exo";
 import ImageContainer from "@components/ImageContainer";
 
 const page = () => {
 
   const [images, setImages] = useState(sampleImages);
+  const [uploaded, setUploaded] = useState(false);
 
   useEffect(() => {
-    fetch("/api/getimage")
+    fetch("/api/image")
       .then((res) => res.json())
       .then((data) => {
         let arr = [];
@@ -25,11 +27,11 @@ const page = () => {
   }, []);
 
   return (
-    <div className=" grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 p-4 h-screen overflow-auto">
-      <Form setImages={setImages}/>
-
+    <div className=" grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:auto-rows-auto sm:grid-flow-row-dense gap-4 p-4 h-screen overflow-auto relative">
+      <Form setImages={setImages} setUploaded={setUploaded}/>
+      <Confirm uploaded={uploaded}/>
       {images && images.map((item, id) => (
-        <ImageContainer img={item} key={id} images={images} setImages={setImages}/>
+        <ImageContainer exp={(((id + 1) % 7 == 0) || (id + 1 == 3)) ? true : false} img={item} key={id} images={images} setImages={setImages}/>
       ))}
     </div>
   )

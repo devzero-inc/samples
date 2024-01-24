@@ -3,11 +3,11 @@
 import Image from "next/image";
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ImageContainer = ({ img, images, setImages }) => {
+const ImageContainer = ({ exp, img, images, setImages }) => {
 
     const handleDelete = async () => {
-        await fetch(`/api/deleteimage?name=${img.name}`, {
-            method: 'POST',
+        await fetch(`/api/image?name=${img.name}`, {
+            method: 'DELETE',
         })
             .then(res => {
                 return res.json()
@@ -23,7 +23,7 @@ const ImageContainer = ({ img, images, setImages }) => {
     }
 
     return (
-        <div className="col-span-1 row-span-1 h-full w-full relative group">
+        <div className={`${exp ? "sm:col-span-2 row-span-2" : "sm:col-span-1 row-span-1"} col-span-1 row-span-1 relative group`}>
             <Image
                 src={img.name ? img.path : img}
                 alt="Devzero"

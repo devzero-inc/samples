@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const Form = ({setImages}) => {
+const Form = ({setImages, setUploaded}) => {
 
     const [file, setFile] = useState(null);
 
@@ -13,7 +13,7 @@ const Form = ({setImages}) => {
         const data = new FormData();
         data.set('file', file);
 
-        await fetch('/api/upload', {
+        await fetch('/api/image', {
             method: 'POST',
             body: data
         })
@@ -21,7 +21,10 @@ const Form = ({setImages}) => {
                 if (res.ok) {
                     const uploadedImageUrl = URL.createObjectURL(file);
                     setImages(prevImages => [uploadedImageUrl, ...prevImages]);
-                    alert('File uploaded successfully!');
+                    setUploaded(true);
+                    setTimeout(() => {
+                        setUploaded(false);
+                    }, 1000);
                     setFile(null);
                 }
                 else{

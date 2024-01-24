@@ -18,6 +18,8 @@ module.exports = {
         "cusBg": "#2c0436",
         "gradient-from": "#6e0096",
         "gradient-to": "#a30196",
+        "gradient-from-2": "#2d0335",
+        "gradient-to-2": "#1d0d49",
         // "form-bg": "#e7ded7",
       }
     },
