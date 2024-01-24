@@ -2,24 +2,32 @@
 
 import Image from "next/image";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { deletePhoto } from "@http/api";
 
 const ImageContainer = ({ exp, img, images, setImages }) => {
 
     const handleDelete = async () => {
-        await fetch(`/api/image?name=${img.name}`, {
-            method: 'DELETE',
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(res => {
-                const filteredImages = images.filter(image => !(image.name && image.name === img.name));
-                setImages(filteredImages);
-                console.log(res);
 
-            }).catch(error => {
-                console.error('Error:', error);
-            });
+        const result = await deletePhoto(img.id);
+        if (result.status === 200) {
+            const filteredImages = images.filter(image => !(image.name && image.name === img.name));
+            setImages(filteredImages);
+        }
+
+        // await fetch(`/api/image?name=${img.name}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => {
+        //         return res.json()
+        //     })
+        //     .then(res => {
+        //         const filteredImages = images.filter(image => !(image.name && image.name === img.name));
+        //         setImages(filteredImages);
+        //         console.log(res);
+
+        //     }).catch(error => {
+        //         console.error('Error:', error);
+        //     });
     }
 
     return (

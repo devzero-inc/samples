@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { uploadPhoto } from "@http/api";
 
-const Form = ({setImages, setUploaded}) => {
+const Form = ({ setImages, setUploaded }) => {
 
     const [file, setFile] = useState(null);
 
@@ -13,34 +14,46 @@ const Form = ({setImages, setUploaded}) => {
         const data = new FormData();
         data.set('file', file);
 
-        await fetch('/api/image', {
-            method: 'POST',
-            body: data
-        })
-            .then(res => {
-                if (res.ok) {
-                    const uploadedImageUrl = URL.createObjectURL(file);
-                    setImages(prevImages => [uploadedImageUrl, ...prevImages]);
-                    setUploaded(true);
-                    setTimeout(() => {
-                        setUploaded(false);
-                    }, 1000);
-                    setFile(null);
-                }
-                else{
-                    alert('Upload failed. Please try again.');
-                }
-                return res.json()
-            })
-            .then(res => {
-                console.log(res);
-            }).catch(error => {
-                console.error('Error:', error);
-            });
+        const result = await uploadPhoto(data);
+
+        if (result) {
+            const uploadedImageUrl = URL.createObjectURL(file);
+            setImages(prevImages => [uploadedImageUrl, ...prevImages]);
+            setUploaded(true);
+            setTimeout(() => {
+                setUploaded(false);
+            }, 1000);
+            setFile(null);
+        }
+
+        // await fetch('/api/image', {
+        //     method: 'POST',
+        //     body: data
+        // })
+        //     .then(res => {
+        //         if (res.ok) {
+        //             const uploadedImageUrl = URL.createObjectURL(file);
+        //             setImages(prevImages => [uploadedImageUrl, ...prevImages]);
+        //             setUploaded(true);
+        //             setTimeout(() => {
+        //                 setUploaded(false);
+        //             }, 1000);
+        //             setFile(null);
+        //         }
+        //         else {
+        //             alert('Upload failed. Please try again.');
+        //         }
+        //         return res.json()
+        //     })
+        //     .then(res => {
+        //         console.log(res);
+        //     }).catch(error => {
+        //         console.error('Error:', error);
+        //     });
     }
 
     return (
-        
+
         <div className=" border-[0.2rem] border-gradient-from p-4 row-span-2 col-span-1 rounded-[0.5rem] flex flex-col justify-between items-center gap-4 text-white">
             <div className=" flex flex-col items-center gap-5">
                 <div className="flex items-center gap-2 pr-3">
@@ -60,12 +73,12 @@ const Form = ({setImages, setUploaded}) => {
             <form className=" flex-1 flex flex-col items-center justify-end gap-4 w-full" onSubmit={handleSubmit}>
                 <label htmlFor="file"
                     className=" w-full flex flex-col items-center justify-center flex-1 mt-4 rounded-lg cursor-pointer bg-gradient-to-r from-gradient-from to-gradient-to hover:opacity-90 p-1">
-                    <Image 
+                    <Image
                         src="/assets/logos/upload.png"
                         alt="Upload"
                         width={75}
                         height={75}
-                        style={{ filter: 'invert(1)'}}
+                        style={{ filter: 'invert(1)' }}
                     />
                     {!file && <p className="text-center">Click to upload a picture</p>}
                     {file && <p className="text-center">{file.name}</p>}

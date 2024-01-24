@@ -5,6 +5,7 @@ import Form from "@components/Form";
 import Confirm from "@components/Confirm";
 import sampleImages from "@public/assets/sample-images/exo";
 import ImageContainer from "@components/ImageContainer";
+import { getPhoto } from "@http/api";
 
 const page = () => {
 
@@ -12,18 +13,32 @@ const page = () => {
   const [uploaded, setUploaded] = useState(false);
 
   useEffect(() => {
-    fetch("/api/image")
-      .then((res) => res.json())
+
+    getPhoto()
       .then((data) => {
         let arr = [];
         data.forEach((item) => {
           const newPath = item.path.replace('public', '').replace(/\\/g, '/');
           const name = item.name;
-          arr.push({ name: name, path: newPath });
+          arr.push({ id:item.id, name: name, path: newPath });
         });
         console.log(arr);
         setImages([...arr, ...sampleImages]);
-      });
+      })
+      .catch((error) => console.log(error));
+
+    // fetch("/api/image")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     let arr = [];
+    //     data.forEach((item) => {
+    //       const newPath = item.path.replace('public', '').replace(/\\/g, '/');
+    //       const name = item.name;
+    //       arr.push({ name: name, path: newPath });
+    //     });
+    //     console.log(arr);
+    //     setImages([...arr, ...sampleImages]);
+    //   });
   }, []);
 
   return (
