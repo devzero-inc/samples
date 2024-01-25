@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
 import fs from "fs";
 import { join, resolve } from "path";
 import pool from "../../../lib/db";
 import { v4 as uuidv4 } from "uuid";
 import sharp from 'sharp';
+import { jsonResponse } from "@utils/apiResponse";
 
 export async function GET(request) {
   const imageId = request.nextUrl.searchParams.get("id");
@@ -11,7 +11,7 @@ export async function GET(request) {
 
   try {
     const client = await pool.connect();
-    console.log(client);
+    // console.log(client);
     try {
       if (info && imageId) {
         const result = await client.query(
@@ -21,9 +21,9 @@ export async function GET(request) {
         const image = result.rows[0];
 
         if (!image) {
-            return NextResponse.json({ message: "Image not found", status: 404 });
+          return jsonResponse({ message: "Image not found", status: 404 });
         }
-        return NextResponse.json({ data: result.rows[0], status: 200 });
+        return jsonResponse({ data: result.rows[0], status: 200 });
       } else if (imageId) {
         const queryResult = await client.query(
           "SELECT * FROM images WHERE id = $1",
@@ -32,13 +32,13 @@ export async function GET(request) {
         const image = queryResult.rows[0];
 
         if (!image) {
-            return NextResponse.json({ message: "Image not found", status: 404 });
+          return jsonResponse({ message: "Image not found", status: 404 });
         }
 
         const filePath = resolve("./public/uploads", image.name);
 
         if (!fs.existsSync(filePath)) {
-            return NextResponse.json({ message: "File does not exist", status: 404 });
+          return jsonResponse({ message: "File does not exist", status: 404 });
         }
 
         const fileBuffer = await fs.promises.readFile(filePath);
@@ -48,14 +48,14 @@ export async function GET(request) {
       } else {
         // Logic to return all images
         const result = await client.query("SELECT * FROM images");
-        return NextResponse.json({ data: result.rows, status: 200 });
+        return jsonResponse({ data: result.rows, status: 200 });
       }
     } finally {
       client.release();
     }
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json({ message: "Internal Server Error", status: 500 });
+    return jsonResponse({ message: "Internal Server Error", status: 500 });
   }
 }
 
@@ -63,48 +63,51 @@ export async function GET(request) {
 
 export async function POST(req) {
   try {
-    const data = await req.formData();
-    const file = data.get("file");
-    if (!file) {
-      return NextResponse.json(
-        { message: "No file uploaded" , status: 400 }
-      );
-    }
-
-    const validMimeTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/gif",
-      "image/webp",
-    ];
-    if (!validMimeTypes.includes(file.type)) {
-      return NextResponse.json(
-        { message: "File is not a valid image", status: 400 }
-      );
-    }
-
-    const byteData = await file.arrayBuffer();
-    const buffer = Buffer.from(byteData);
-
-    const uniqueId = uuidv4();
-    const uniqueFileName = uniqueId + "-" + file.name;
-
-    const uploadDir = "./public/uploads";
-    const filePath = join(uploadDir, uniqueFileName);
-
-    // Save the file
-    fs.writeFileSync(filePath, buffer);
-
-    const image = sharp(buffer);
-    const metadata = await image.metadata();
-    const dimensions = { width: metadata.width, height: metadata.height };
-
-    const query = "INSERT INTO images (id, name, path, type, width, height, createdAt, updatedAt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-    const now = new Date();
-    const values = [uniqueId, uniqueFileName, filePath, file.type, dimensions.width, dimensions.height, now, now];
-    await pool.query(query, values);
-
-    return NextResponse.json({
+    const client = await pool.connect();
+    try {
+      // Use the result
+      const data = await req.formData();
+      const file = data.get("file");
+      if (!file) {
+        return jsonResponse(
+          { message: "No file uploaded", status: 400 }
+        );
+      }
+  
+      const validMimeTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ];
+      if (!validMimeTypes.includes(file.type)) {
+        return jsonResponse(
+          { message: "File is not a valid image", status: 400 }
+        );
+      }
+  
+      const byteData = await file.arrayBuffer();
+      const buffer = Buffer.from(byteData);
+  
+      const uniqueId = uuidv4();
+      const uniqueFileName = uniqueId + "-" + file.name;
+  
+      const uploadDir = "./public/uploads";
+      const filePath = join(uploadDir, uniqueFileName);
+  
+      // Save the file
+      fs.writeFileSync(filePath, buffer);
+  
+      const image = sharp(buffer);
+      const metadata = await image.metadata();
+      const dimensions = { width: metadata.width, height: metadata.height };
+  
+      const query = "INSERT INTO images (id, name, path, type, width, height, createdAt, updatedAt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+      const now = new Date();
+      const values = [uniqueId, uniqueFileName, filePath, file.type, dimensions.width, dimensions.height, now, now];
+      await client.query(query, values);
+  
+      return jsonResponse({
         message: "File uploaded successfully",
         data: {
           name: uniqueFileName,
@@ -112,9 +115,12 @@ export async function POST(req) {
         },
         status: 200
       });
+    } finally {
+      client.release();
+    }
   } catch (error) {
-    console.error("Error saving file:", error);
-    return NextResponse.json({ message: "Error saving file", status: 500 });
+    console.error("Error:", error);
+    return jsonResponse({ message: "Internal Server Error", status: 500 });
   }
 }
 
@@ -124,7 +130,7 @@ export async function DELETE(request) {
   const imageId = request.nextUrl.searchParams.get("id");
 
   if (!imageId) {
-    return NextResponse.json({ message: "Image ID is required", status: 400 });
+    return jsonResponse({ message: "Image ID is required", status: 400 });
   }
 
   try {
@@ -136,7 +142,7 @@ export async function DELETE(request) {
       const image = res.rows[0];
 
       if (!image) {
-        return NextResponse.json({ message: "Image not found", status: 404 });
+        return jsonResponse({ message: "Image not found", status: 404 });
       }
 
       const filePath = resolve("./public/uploads", image.name); // Use the path from the database
@@ -144,7 +150,7 @@ export async function DELETE(request) {
 
       await client.query("DELETE FROM images WHERE id = $1", [imageId]);
 
-      return NextResponse.json({
+      return jsonResponse({
         message: "Image deleted successfully",
         status: 200,
       });
@@ -153,6 +159,6 @@ export async function DELETE(request) {
     }
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json({ message: "Internal Server Error", status: 500 });
+    return jsonResponse({ message: "Internal Server Error", status: 500 });
   }
 }

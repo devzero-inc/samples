@@ -11,7 +11,7 @@ on:
       - 'photo-upload-app/**'
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
 
@@ -29,16 +29,13 @@ jobs:
         cd photo-upload-app
         npm install
 
-    # # - name: Build
-    # #   run: npm run build
-
-    # - name: Lint
-    #   run: |
-    #     cd photo-upload-app
-    #     npm run lint
-
-    # # Optional: Add additional steps for testing if you have tests
-    # - name: Run Tests
-    #   run: |
-    #     cd photo-upload-app
-    #     npm test
+    - name: Lint
+      run: |
+        cd photo-upload-app
+        npm run lint
+        
+    - name: Run Tests
+      run: |
+        cd photo-upload-app
+        npm test
+        
