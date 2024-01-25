@@ -1,4 +1,4 @@
-# Photo Upload Directory ![ workflow](https://github.com/devzero-inc/samples/actions/workflows/main.yml/badge.svg)
+# Photo Upload Directory ![ workflow](https://github.com/devzero-inc/samples/actions/workflows/photo.yml/badge.svg)
 
 ## Overview
 The Photo Upload App is a streamlined and user-friendly platform designed for the effortless uploading and management of photos. Perfect for individuals looking to store, organize, and access their memories in the cloud, our app stands out for its intuitive design and reliable performance, ensuring your precious moments are always just a few clicks away.
