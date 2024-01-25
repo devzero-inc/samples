@@ -1,21 +1,16 @@
-# Internal Employee Directory
+# Internal Employee Directory ![ workflow](https://github.com/devzero-inc/samples/actions/workflows/main.yml/badge.svg)
 
 ## Overview
 This Internal Employee Directory is a modern, full-stack web application designed to manage and display employee information within an organization. It leverages a MongoDB database for efficient data storage, Node.js and Express.js for a robust server-side environment, and React.js with Tailwind CSS for an interactive and responsive client-side experience.
 
+![Alt Text](https://i.imgur.com/CIW6oSl.png)
+
 ## Table of contents
-- [TODO](#todo)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [High Level Design](#high-level-design)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
-
-
-## TODO:
-1. Writing unit test
-3. CI CD pipeline
-4. Local lint and pre commit hook
 
 ## Features
 - **Employee Data Management:** Manage employee records, view individual details, and visualize organizational hierarchy.
@@ -25,9 +20,17 @@ This Internal Employee Directory is a modern, full-stack web application designe
 
 
 ## Technologies Used
-- **Database:** MongoDB
-- **Backend:** Node.js, Express.js, Mongoose ODM
-- **Frontend:** React.js, Tailwind CSS
+
+- **Database:** [MongoDB](https://www.mongodb.com/) - A document-based, distributed database built for modern application developers and for the cloud era.
+- **Backend:** 
+  - [Node.js](https://nodejs.org/)
+  - [Express.js](https://expressjs.com/)
+  - [Mongoose ODM](https://mongoosejs.com/)
+  
+- **Frontend:** 
+  - [React.js](https://reactjs.org/)
+  - [Tailwind CSS](https://tailwindcss.com/)
+
 
 
 ## High Level Design
