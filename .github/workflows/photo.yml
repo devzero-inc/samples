@@ -1,0 +1,44 @@
+name: Photo Upload App CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'photo-upload-app/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'photo-upload-app/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.x'
+
+    - name: Install Dependencies
+      run: |
+        cd photo-upload-app
+        npm install
+
+    # # - name: Build
+    # #   run: npm run build
+
+    # - name: Lint
+    #   run: |
+    #     cd photo-upload-app
+    #     npm run lint
+
+    # # Optional: Add additional steps for testing if you have tests
+    # - name: Run Tests
+    #   run: |
+    #     cd photo-upload-app
+    #     npm test
