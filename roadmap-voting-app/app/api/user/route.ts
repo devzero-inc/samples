@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "User logged in successfully", data: data, status: 200 });
         } else {
             const formdata = await req.formData();
-            const username = formdata.get("username") as string;
+            const username = formdata.get("name") as string;
             const email = formdata.get("email") as string;
             const password = formdata.get("password") as string;
             
