@@ -8,11 +8,9 @@ import { jsonResponse } from "@utils/apiResponse";
 export async function GET(request) {
   const imageId = request.nextUrl.searchParams.get("id");
   const info = request.nextUrl.searchParams.get("info");
-
+  let client;
   try {
-    const client = await pool.connect();
-    // console.log(client);
-    try {
+      client = await pool.connect();
       if (info && imageId) {
         const result = await client.query(
           "SELECT * FROM images WHERE id = $1",
@@ -46,26 +44,21 @@ export async function GET(request) {
         response.headers.set("Content-Type", image.type);
         return response;
       } else {
-        // Logic to return all images
         const result = await client.query("SELECT * FROM images");
         return jsonResponse({ data: result.rows, status: 200 });
-      }
-    } finally {
-      client.release();
-    }
+    } 
   } catch (error) {
     console.error("Error:", error);
     return jsonResponse({ message: "Internal Server Error", status: 500 });
+  }finally {
+    if(client)client.release();
   }
 }
 
-// ____________________
-
 export async function POST(req) {
+  let client;
   try {
-    const client = await pool.connect();
-    try {
-      // Use the result
+    client = await pool.connect();
       const data = await req.formData();
       const file = data.get("file");
       if (!file) {
@@ -95,7 +88,6 @@ export async function POST(req) {
       const uploadDir = "./public/uploads";
       const filePath = join(uploadDir, uniqueFileName);
   
-      // Save the file
       fs.writeFileSync(filePath, buffer);
   
       const image = sharp(buffer);
@@ -115,16 +107,14 @@ export async function POST(req) {
         },
         status: 200
       });
-    } finally {
-      client.release();
-    }
+     
   } catch (error) {
     console.error("Error:", error);
     return jsonResponse({ message: "Internal Server Error", status: 500 });
+  }finally {
+    if(client)client.release();
   }
 }
-
-// ____________________
 
 export async function DELETE(request) {
   const imageId = request.nextUrl.searchParams.get("id");
@@ -132,10 +122,9 @@ export async function DELETE(request) {
   if (!imageId) {
     return jsonResponse({ message: "Image ID is required", status: 400 });
   }
-
+  let client;
   try {
-    const client = await pool.connect();
-    try {
+    client = await pool.connect();
       const res = await client.query("SELECT * FROM images WHERE id = $1", [
         imageId,
       ]);
@@ -145,7 +134,7 @@ export async function DELETE(request) {
         return jsonResponse({ message: "Image not found", status: 404 });
       }
 
-      const filePath = resolve("./public/uploads", image.name); // Use the path from the database
+      const filePath = resolve("./public/uploads", image.name);
       await fs.promises.unlink(filePath);
 
       await client.query("DELETE FROM images WHERE id = $1", [imageId]);
@@ -154,11 +143,11 @@ export async function DELETE(request) {
         message: "Image deleted successfully",
         status: 200,
       });
-    } finally {
-      client.release();
-    }
+     
   } catch (error) {
     console.error("Error:", error);
     return jsonResponse({ message: "Internal Server Error", status: 500 });
+  }finally {
+    if(client)client.release();
   }
 }

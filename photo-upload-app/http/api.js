@@ -8,6 +8,22 @@ async function getPhoto() {
     }
 }
 
+async function fetchImageData(id) {
+    try {
+        const response = await fetch(`/api/image?id=${id}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // const data = await response.json();
+        const imageBlob = await response.blob();
+        const imageUrl = URL.createObjectURL(imageBlob);
+        return imageUrl;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
+
+
 async function uploadPhoto(file){
     try {
         const response = await fetch("/api/image", {
@@ -33,4 +49,4 @@ async function deletePhoto(id){
     }
 }
 
-export { getPhoto, uploadPhoto, deletePhoto };
+export { getPhoto, uploadPhoto, deletePhoto, fetchImageData };
