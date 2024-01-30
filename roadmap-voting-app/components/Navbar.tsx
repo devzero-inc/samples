@@ -23,12 +23,12 @@ const Navbar = () => {
             </div>
             <div className="flex gap-4 items-center px-4">
                 <Link href="/auth/signin" className="outline-none">
-                    <button className="bg-custom-gradient px-4 py-2 rounded-full w-32">
+                    <button className="bg-custom-gradient px-4 py-2 rounded-full w-32 font-bold">
                         Sign in
                     </button>
                 </Link>
                 <Link href="/auth/signup" className="outline-none">
-                    <button className="bg-custom-gradient px-4 py-2 rounded-full w-32">
+                    <button className="bg-custom-gradient px-4 py-2 rounded-full w-32 font-bold">
                         Sign up
                     </button>
                 </Link>
