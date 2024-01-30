@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Roadmap Voting App
 
-## Getting Started
+## Overview
+A roadmap voting app that democratizes the development process by enabling authenticated users to influence a project's trajectory. Through a simple and intuitive interface, users can vote on proposed features, track the progress of development items, and see at a glance which enhancements are up next or already completed. This platform ensures that every voice is heard and that the project aligns closely with the community's most valued feedback and needs.
 
-First, run the development server:
+![Alt Text](https://i.imgur.com/TvgsZFZ.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of contents
+- [Todo](#todo)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Tech Stack](#tech-stack)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Todo
+1. Sorting based on votes and timeline.
+1. Page showing overall votes
+1. Designing HLD
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
+- **User Authentication:** Secure signup and sign-in capabilities to ensure a personalized and secure voting experience.
+- **Voting System:** Users can cast their votes on feature proposals, influencing the priority of the project's development roadmap.
+- **Development Tracking:** View the progress of different features from conception through to completion with clear, status-based categorization.
+- **Roadmap Overview:** An at-a-glance look at the project's development pipeline, including upcoming, in-progress, and completed items.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Technologies Used   
 
-To learn more about Next.js, take a look at the following resources:
+- **Database + Auth service:** [Supabase](https://supabase.com/)
+- **Backend + Frontend:** [Next.js](https://nextjs.org/)
+- **Styling:** [TailwindCSS](https://tailwindcss.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Database + Auth Service:** Our application leverages Supabase, an open-source Firebase alternative that combines both database and authentication services. Supabase provides us with a PostgreSQL database for robust and relational data storage, along with secure and scalable user authentication.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Backend + Frontend:** We've chosen Next.js for its seamless integration of frontend and backend capabilities, providing a cohesive development experience. This is complemented by Tailwind CSS for styling, offering a utility-first approach that enables rapid and responsive design implementations.
