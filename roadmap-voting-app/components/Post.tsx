@@ -4,18 +4,29 @@ import WarningIcon from '@mui/icons-material/Warning';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PollOutlinedIcon from '@mui/icons-material/PollOutlined';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface PostProps {
+    id?: string,
     title?: string,
     description?: string,
     status?: string,
     target?: string,
 }
 
-const Post: React.FC<PostProps> = ({ title, description, status, target }) => {
+interface vote {
+    id: string,
+    postId: string,
+    userId: string,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+}
 
-    const [displayDate, setDisplayDate] = React.useState<string>('');
+const Post: React.FC<PostProps> = ({ id, title, description, status, target }) => {
+
+    const [displayDate, setDisplayDate] = useState<string>('');
+    const [votes, setVotes] = useState<vote[]>([]);
 
     const getDate = (target: string): void => {
         const date = new Date(target);
@@ -32,8 +43,17 @@ const Post: React.FC<PostProps> = ({ title, description, status, target }) => {
         }
     }, [target])
 
+    useEffect(() => {
+        fetch(`/api/post?postId=${id}`)
+            .then((res) => res.json()) 
+            .then((data) => {
+                // console.log(data);
+                setVotes(data.votes);
+            })
+            .catch((err) => console.log(err));
+    }, [])
+
     const getStatusColor = (status: string): string => {
-        console.log(status);
         switch (status) {
             case 'In Progress':
                 return 'bg-blue-500';
@@ -48,16 +68,51 @@ const Post: React.FC<PostProps> = ({ title, description, status, target }) => {
         }
     }
 
+    const vote = (type: string): void => {
+        const localData = localStorage.getItem("session");
+        const session = localData ? JSON.parse(localData) : null;
+        if(!session){
+            alert('Please login to vote');
+            return;
+        }
+        const userID = session?.user?.id;
+        const token = session?.access_token;
+        console.log(token);
+
+        if (userID && id) {
+
+            const formData = new FormData();
+            formData.append('postId', id);
+            formData.append('userId', userID);
+            formData.append('type', type);
+
+            fetch(`/api/vote`, {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: formData,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    if(data.status === 200){
+                        setVotes(prev => [...prev, data.data]);
+                    }
+                })
+                .catch((err) => console.log(err));
+        }
+    }
 
     return (
         <div className=" flex border border-cusBorder items-center h-44 bg-cusSec  text-white">
             <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full">
                 <div>
-                    <WarningIcon />
+                    <WarningIcon className=' cursor-pointer' onClick={() => {vote('urgent')}}/>
                 </div>
                 <div className='flex flex-col items-center gap-2'>
-                    <KeyboardArrowUpIcon className=' scale-150' />
-                    <KeyboardArrowDownIcon className=' scale-150' />
+                    <KeyboardArrowUpIcon className=' scale-150 cursor-pointer' onClick={() => {vote('yes')}}/>
+                    <KeyboardArrowDownIcon className=' scale-150 cursor-pointer' onClick={() => {vote('meh')}}/>
                 </div>
             </div>
             <div className=" flex-1 h-full flex flex-col py-5 px-4 justify-between border-l border-r border-cusBorder">
@@ -75,7 +130,7 @@ const Post: React.FC<PostProps> = ({ title, description, status, target }) => {
                 <p className=''>Target Release: <span className='bg-custom-gradient px-2 py-1 rounded-lg'>{displayDate}</span></p>
             </div>
             <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full">
-                <div className=' text-sm'>+24</div>
+                <div className=' text-sm'>+{votes.length}</div>
                 <PollOutlinedIcon className=' text-3xl' />
             </div>
         </div>

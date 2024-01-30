@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
 
+    const router = useRouter();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -22,7 +24,10 @@ const SignIn = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                window.location.href = '/';
+                localStorage.setItem("session", JSON.stringify(data.data.session));
+                localStorage.setItem("name", data.userData.name);
+                window.dispatchEvent(new Event("storageUpdate"));
+                router.push('/');
             })
             .catch(err => console.log(err));
     }

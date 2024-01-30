@@ -23,7 +23,7 @@ export default function Home() {
     fetch("/api/post")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setPosts(data.posts);
       })
       .catch((err) => console.log(err));
@@ -35,9 +35,9 @@ export default function Home() {
       <Topbar />
 
       {posts && posts.map((ele: post): JSX.Element => (
-        <Post key={ele.id} title={ele.title} description={ele.description} status={ele.status} target={ele.target}/>
+        <Post key={ele.id} id={ele.id} title={ele.title} description={ele.description} status={ele.status} target={ele.target} />
       ))}
-      
+
     </div>
   );
 }
