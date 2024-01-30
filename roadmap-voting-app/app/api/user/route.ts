@@ -31,10 +31,16 @@ export async function POST(req: NextRequest) {
             const signUpResponse = await supabase.auth.signUp({ email, password });
             if (signUpResponse.error) throw signUpResponse.error;
 
+            if (signUpResponse.data.user) {
+                const { error: insertError } = await supabase
+                    .from('userstable')
+                    .insert([{ id: signUpResponse.data.user.id, name: username, email: email }]);
+                if (insertError) throw insertError;
+            }
+
             return NextResponse.json({ message: "user created successfuly", data:signUpResponse.data , status: 200 });
         }
     } catch (error) {
-        // console.log(error);
         if (error instanceof Error) {
             return NextResponse.json({ message: error.message, status: 401 });
         } else {

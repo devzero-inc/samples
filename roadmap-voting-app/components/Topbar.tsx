@@ -17,7 +17,7 @@ const Topbar = () => {
                     In Progress
                 </div>
                 <div>
-                    Complete
+                    Completed
                 </div>
             </div>
             <div>
