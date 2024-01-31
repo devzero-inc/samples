@@ -9,12 +9,13 @@ A roadmap voting app that democratizes the development process by enabling authe
 - [Todo](#todo)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
+- [High Level Design](#high-level-design)
 - [Tech Stack](#tech-stack)
+- [Installation](#installation)
 
 ## Todo
-1. Sorting based on votes and timeline.
-1. Page showing overall votes
-1. Designing HLD
+1. Dockerizing
+1. Testing
 
 ## Features
 - **User Authentication:** Secure signup and sign-in capabilities to ensure a personalized and secure voting experience.
@@ -29,8 +30,33 @@ A roadmap voting app that democratizes the development process by enabling authe
 - **Backend + Frontend:** [Next.js](https://nextjs.org/)
 - **Styling:** [TailwindCSS](https://tailwindcss.com/)
 
+## High Level Design
+
+![Alt Text](https://i.imgur.com/MtVWN7J.jpeg)
+
+The Roadmap Voting App offers an intuitive and collaborative platform for users to engage with and influence product development roadmaps. It integrates a seamless authentication process through Supabase, enabling users to vote on features after signing in. The frontend interfaces with a backend API that interacts with the Supabase database, managing entities such as users, posts, and votes. User interactions on the frontend trigger API calls, prompting state changes and data updates which are then dynamically reflected on the user interface. This continuous loop ensures a real-time, interactive experience, allowing the community's preferences to directly shape the product's evolution.
+
 ## Tech Stack
 
 **Database + Auth Service:** Our application leverages Supabase, an open-source Firebase alternative that combines both database and authentication services. Supabase provides us with a PostgreSQL database for robust and relational data storage, along with secure and scalable user authentication.
 
 **Backend + Frontend:** We've chosen Next.js for its seamless integration of frontend and backend capabilities, providing a cohesive development experience. This is complemented by Tailwind CSS for styling, offering a utility-first approach that enables rapid and responsive design implementations.
+
+### Prerequisites
+- Nodejs
+- Docker
+
+## Installation
+
+Run locally: 
+```bash
+git clone https://github.com/devzero-inc/samples.git
+cd samples/roadmap-voting-app
+npm install
+npx supabase init
+npx supabase start
+npm run start app
+```
+App will be running on ```PORT:3000``` -> [http://localhost:3000/](http://localhost:3000/)
+
+Now just go to [http://localhost:3000/](http://localhost:3000/) and explore the application.
