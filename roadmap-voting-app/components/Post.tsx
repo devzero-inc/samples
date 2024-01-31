@@ -12,6 +12,7 @@ interface PostProps {
     description?: string,
     status?: string,
     target?: string,
+    isLast?: boolean,
 }
 
 interface vote {
@@ -23,7 +24,7 @@ interface vote {
     updatedAt: string,
 }
 
-const Post: React.FC<PostProps> = ({ id, title, description, status, target }) => {
+const Post: React.FC<PostProps> = ({ id, title, description, status, target, isLast }) => {
 
     const [displayDate, setDisplayDate] = useState<string>('');
     const [votes, setVotes] = useState<vote[]>([]);
@@ -45,7 +46,7 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target }) =
 
     useEffect(() => {
         fetch(`/api/post?postId=${id}`)
-            .then((res) => res.json()) 
+            .then((res) => res.json())
             .then((data) => {
                 // console.log(data);
                 setVotes(data.votes);
@@ -71,7 +72,7 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target }) =
     const vote = (type: string): void => {
         const localData = localStorage.getItem("session");
         const session = localData ? JSON.parse(localData) : null;
-        if(!session){
+        if (!session) {
             alert('Please login to vote');
             return;
         }
@@ -96,7 +97,7 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target }) =
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data);
-                    if(data.status === 200){
+                    if (data.status === 200) {
                         setVotes(prev => [...prev, data.data]);
                     }
                 })
@@ -105,31 +106,34 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target }) =
     }
 
     return (
-        <div className=" flex border border-cusBorder items-center h-44 bg-cusSec  text-white">
-            <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full">
+        <div className={` flex border-y border-y-cusBorder items-center h-44 bg-cusSec  text-white ${isLast ? "rounded-br-lg rounded-bl-lg" : ""}`}>
+            <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full border-r border-cusBorder">
                 <div>
-                    <WarningIcon className=' cursor-pointer' onClick={() => {vote('urgent')}}/>
+                    <WarningIcon className=' cursor-pointer' onClick={() => { vote('urgent') }} />
                 </div>
                 <div className='flex flex-col items-center gap-2'>
-                    <KeyboardArrowUpIcon className=' scale-150 cursor-pointer' onClick={() => {vote('yes')}}/>
-                    <KeyboardArrowDownIcon className=' scale-150 cursor-pointer' onClick={() => {vote('meh')}}/>
+                    <KeyboardArrowUpIcon className=' scale-150 cursor-pointer' onClick={() => { vote('yes') }} />
+                    <KeyboardArrowDownIcon className=' scale-150 cursor-pointer' onClick={() => { vote('meh') }} />
                 </div>
             </div>
-            <div className=" flex-1 h-full flex flex-col py-5 px-4 justify-between border-l border-r border-cusBorder">
-                <div>
-                    <div className='flex items-center gap-2 mb-2'>
+            <div className=" flex-1 h-full overflow-auto flex flex-col py-2 lg:py-5 px-4 justify-between border-l border-r border-cusBorder">
+                <div className=''>
+                    <div className='flex lg:items-center gap-2 lg:mb-2 text-nowrap flex-col lg:flex-row'>
                         {status &&
-                            <p className={`${getStatusColor(status)} px-2 rounded-lg`}>{status}</p>
+                            <p className={`${getStatusColor(status)} px-2 rounded-lg w-fit`}>{status}</p>
                         }
-                        <p className=' font-bold text-lg'>{title}</p>
+                        <p className=' font-bold text-lg text-wrap'>{title}</p>
                     </div>
-                    <p className='text-sm text-gray-400'>
+                    <p className='text-sm text-gray-400 overflow-ellipsis'>
                         {description}
                     </p>
                 </div>
-                <p className=''>Target Release: <span className='bg-custom-gradient px-2 py-1 rounded-lg'>{displayDate}</span></p>
+                <div className='flex items-center gap-2'>
+                    <p className=' hidden md:block text-sm lg:text-[1rem]'>Target Release:</p>
+                    <span className=' text-sm lg:text-[1rem] bg-custom-gradient px-2 py-1 rounded-lg text-nowrap'>{displayDate}</span>
+                </div>
             </div>
-            <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full">
+            <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full border-l border-cusBorder">
                 <div className=' text-sm'>+{votes.length}</div>
                 <PollOutlinedIcon className=' text-3xl' />
             </div>

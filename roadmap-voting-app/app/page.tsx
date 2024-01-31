@@ -31,11 +31,19 @@ export default function Home() {
   }, [])
 
   return (
-    <div className=" w-[50%] flex flex-col gap-1 mb-4">
+    <div className=" w-[50%] flex flex-col mb-4">
       <Topbar />
 
-      {posts && posts.map((ele: post): JSX.Element => (
-        <Post key={ele.id} id={ele.id} title={ele.title} description={ele.description} status={ele.status} target={ele.target} />
+      {posts && posts.map((ele: post, it: number): JSX.Element => (
+        <Post
+          key={ele.id}
+          id={ele.id}
+          title={ele.title}
+          description={ele.description}
+          status={ele.status}
+          target={ele.target}
+          isLast={it === posts.length - 1 ? true : false}
+        />
       ))}
 
     </div>
