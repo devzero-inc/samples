@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
             const { data, error } = await supabase
                 .from('votes')
                 .select('*')
-                .eq('postId', postId);
+                .eq('postid', postId);
 
             if (error) throw error;
             return NextResponse.json({ votes: data, status: 200 });

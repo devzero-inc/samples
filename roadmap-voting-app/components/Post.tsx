@@ -48,7 +48,7 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
         fetch(`/api/post?postId=${id}`)
             .then((res) => res.json())
             .then((data) => {
-                // console.log(data);
+                console.log(data);
                 setVotes(data.votes);
             })
             .catch((err) => console.log(err));
@@ -98,7 +98,12 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
                 .then((data) => {
                     console.log(data);
                     if (data.status === 200) {
-                        setVotes(prev => [...prev, data.data]);
+                        setVotes(prev => {
+                            if(prev){
+                                return [...prev, data.data]
+                            }
+                            return [data.data]
+                        });
                     }
                 })
                 .catch((err) => console.log(err));
@@ -134,7 +139,7 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
                 </div>
             </div>
             <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full border-l border-cusBorder">
-                <div className=' text-sm'>+{votes.length}</div>
+                <div className=' text-sm'>+{votes ? votes.length : "0"}</div>
                 <PollOutlinedIcon className=' text-3xl' />
             </div>
         </div>

@@ -22,16 +22,16 @@ export async function POST(req: NextRequest) {
         const existingVote = await supabase
             .from('votes')
             .select('*')
-            .eq('postId', postId)
-            .eq('userId', userId)
+            .eq('postid', postId)
+            .eq('userid', userId)
             .single();
             
         if (existingVote.data) {
             const response = await supabase
                 .from('votes')
                 .update({ type, updatedAt: new Date() })
-                .eq('postId', postId)
-                .eq('userId', userId);
+                .eq('postid', postId)
+                .eq('userid', userId);
             if (response.error){
                 throw response.error;
             }
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
             const id = uuidv4();
             const response = await supabase
                 .from('votes')
-                .insert([{ id: id, postId: postId, userId: userId, type: type, createdAt: date, updatedAt: date }]);
+                .insert([{ id: id, postid: postId, userid: userId, type: type }]);
             if (response.error){
                 throw response.error;
             }
