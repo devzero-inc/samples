@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabaseClient';
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
         
-        const postId = req.nextUrl.searchParams.get("postId");
+        const postId = req.nextUrl.searchParams.get("postId") as string;
 
         if (postId) {
             const { data, error } = await supabase

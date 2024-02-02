@@ -20,10 +20,12 @@ export default function Home() {
 
   useEffect(() => {
 
-    fetch("/api/post")
+    fetch("/api/posts", {
+      method: "POST",
+    })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setPosts(data.posts);
       })
       .catch((err) => console.log(err));

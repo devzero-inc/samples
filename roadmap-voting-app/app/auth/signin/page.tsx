@@ -39,7 +39,7 @@ const SignIn = () => {
                 <input className=" px-4 py-3 rounded-lg bg-cusInput outline-none" type="email" placeholder="Enter your email" onChange={e => setEmail(e.target.value)} />
                 <input className=" px-4 py-3 rounded-lg bg-cusInput outline-none" type="password" placeholder="Enter your password" onChange={e => setPassword(e.target.value)} />
                 <Link href="/auth/signup" className="outline-none text-center">
-                    Don't have an account? <span className="bg-clip-text text-transparent bg-custom-gradient">Signup</span>
+                    Don&apos;t have an account? <span className="bg-clip-text text-transparent bg-custom-gradient">Signup</span>
                 </Link>
                 <button type="submit" className=" bg-custom-gradient px-4 py-3 rounded-lg outline-none">
                     Sign In

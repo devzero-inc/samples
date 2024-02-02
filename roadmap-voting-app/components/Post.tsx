@@ -45,14 +45,16 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
     }, [target])
 
     useEffect(() => {
-        fetch(`/api/post?postId=${id}`)
+        fetch(`/api/posts?postId=${id}`, {
+            method: "POST",
+        })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
                 setVotes(data.votes);
             })
             .catch((err) => console.log(err));
-    }, [])
+    }, [id])
 
     const getStatusColor = (status: string): string => {
         switch (status) {
