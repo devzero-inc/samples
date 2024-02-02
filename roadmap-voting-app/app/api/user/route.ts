@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../lib/supabaseClient';
+import { signInWithSupabase, getUserFromSupabase, signUpWithSupabase, insertUserToSupabase } from '../../../utils/controller';
 
 export async function POST(req: NextRequest) {
     try {
@@ -8,16 +8,13 @@ export async function POST(req: NextRequest) {
             const formdata = await req.formData();
             const email = formdata.get("email") as string;
             const password = formdata.get("password") as string;
-            const signInresponse = await supabase.auth.signInWithPassword({ email, password });
+
+            const signInresponse = await signInWithSupabase(email, password);
             if (signInresponse.error) throw signInresponse.error;
 
             const userId = signInresponse.data.user.id;
 
-            const { data: userData, error: userError } = await supabase
-                .from('userstable')
-                .select('*')
-                .eq('id', userId)
-                .single();
+            const { data: userData, error: userError } = await getUserFromSupabase(userId);
 
             if (userError) throw userError;
             return NextResponse.json({ message: "User logged in successfully", data: signInresponse.data, userData: userData, status: 200 });
@@ -27,7 +24,6 @@ export async function POST(req: NextRequest) {
             const email = formdata.get("email") as string;
             const password = formdata.get("password") as string;
             
-            console.log(username, email, password);
             if (!username) {
                 return NextResponse.json({ message: 'Username is required', status: 400 });
             }
@@ -38,13 +34,12 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json({ message: 'Password is required', status: 400 });
             }
 
-            const signUpResponse = await supabase.auth.signUp({ email, password });
+            const signUpResponse = await signUpWithSupabase(email, password);
             if (signUpResponse.error) throw signUpResponse.error;
 
             if (signUpResponse.data.user) {
-                const { error: insertError } = await supabase
-                    .from('userstable')
-                    .insert([{ id: signUpResponse.data.user.id, name: username, email: email }]);
+                const { error: insertError } = await insertUserToSupabase(signUpResponse.data.user.id, username, email);
+
                 if (insertError) throw insertError;
             }
 
