@@ -15,8 +15,10 @@ const config: Config = {
         'custom-gradient': 'linear-gradient(to right, #e73c9f, #a032c6, #4125f8)',
       },
       colors: {
+        // cusBg: "#0f0b29",
         cusBg: "#0f0b29",
         cusSec: "#120d30",
+        cusWhite: "#F3ECFF",
         // cusSec: "#35174d",
         cusInput: "#261046",
         cusBorder: "#f3effe",

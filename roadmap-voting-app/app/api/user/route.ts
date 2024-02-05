@@ -10,9 +10,8 @@ export async function POST(req: NextRequest) {
             const password = formdata.get("password") as string;
 
             const signInresponse = await signInWithSupabase(email, password);
-            if (signInresponse.error) throw signInresponse.error;
 
-            const userId = signInresponse.data.user.id;
+            const userId = signInresponse.userId;
 
             const { data: userData, error: userError } = await getUserFromSupabase(userId);
 
@@ -23,7 +22,7 @@ export async function POST(req: NextRequest) {
             const username = formdata.get("name") as string;
             const email = formdata.get("email") as string;
             const password = formdata.get("password") as string;
-            
+
             if (!username) {
                 return NextResponse.json({ message: 'Username is required', status: 400 });
             }
@@ -35,21 +34,18 @@ export async function POST(req: NextRequest) {
             }
 
             const signUpResponse = await signUpWithSupabase(email, password);
-            if (signUpResponse.error) throw signUpResponse.error;
+            // if (signUpResponse.error) throw signUpResponse.error;
 
-            if (signUpResponse.data.user) {
-                const { error: insertError } = await insertUserToSupabase(signUpResponse.data.user.id, username, email);
+            if (signUpResponse.user && signUpResponse.userID) {
+                const { error: insertError } = await insertUserToSupabase(signUpResponse.userID, username, email);
 
                 if (insertError) throw insertError;
             }
 
-            return NextResponse.json({ message: "user created successfuly", data:signUpResponse.data, status: 200 });
+            return NextResponse.json({ message: "user created successfuly", data: signUpResponse.data, status: 200 });
         }
     } catch (error) {
-        if (error instanceof Error) {
-            return NextResponse.json({ message: error.message, status: 401 });
-        } else {
-            return NextResponse.json({ message: 'An unexpected error occurred', status: 500 });
-        }
+        console.error(error);
+        return NextResponse.json({ message: 'An unexpected error occurred', status: 500 });
     }
 }

@@ -25,7 +25,6 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setPosts(data.posts);
       })
       .catch((err) => console.log(err));
@@ -33,7 +32,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className=" w-[50%] flex flex-col mb-4">
+    <div className=" w-[50%] flex flex-col gap-1 mb-4">
       <Topbar />
 
       {posts && posts.map((ele: post, it: number): JSX.Element => (

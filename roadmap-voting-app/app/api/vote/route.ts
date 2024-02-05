@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import {authenticate} from '../../../lib/authenticate';
+import { authenticate } from '../../../lib/authenticate';
+import { getExistingVote, updateVote, addVote } from '../../../utils/controller';
 
 export async function POST(req: NextRequest) {
     try {
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
         const formdata = await req.formData();
         const postId = formdata.get("postId") as string;
         const userId = formdata.get("userId") as string;
-        const type = formdata.get("type") as string; 
+        const type = formdata.get("type") as string;
 
         if (!postId || !userId) {
             return NextResponse.json({ message: 'Post ID and User ID are required', status: 400 });
@@ -19,41 +19,19 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: 'Vote type is required', status: 400 });
         }
 
-        const existingVote = await supabase
-            .from('votes')
-            .select('*')
-            .eq('postid', postId)
-            .eq('userid', userId)
-            .single();
-            
-        if (existingVote.data) {
-            const response = await supabase
-                .from('votes')
-                .update({ type, updatedAt: new Date() })
-                .eq('postid', postId)
-                .eq('userid', userId);
-            if (response.error){
-                throw response.error;
-            }
-                
+        const existingVote = await getExistingVote(postId, userId);
+
+        if (existingVote) {
+            await updateVote(postId, userId, type);
             return NextResponse.json({ message: "Vote updated successfully", status: 201 });
-        }else{
+        } else {
             const date = new Date();
             const id = uuidv4();
-            const response = await supabase
-                .from('votes')
-                .insert([{ id: id, postid: postId, userid: userId, type: type }]);
-            if (response.error){
-                throw response.error;
-            }
-            return NextResponse.json({ message: "Vote recorded successfully", data: {id: id, postId: postId, userId: userId, type: type, createdAt: date, updatedAt: date }, status: 200 });
+            await addVote(id, postId, userId, type);
+            return NextResponse.json({ message: "Vote recorded successfully", data: { id: id, postId: postId, userId: userId, type: type, createdAt: date, updatedAt: date }, status: 200 });
         }
     } catch (error) {
         console.log(error);
-        if (error) {
-            return NextResponse.json({ message: error, status: 401 });
-        } else {
-            return NextResponse.json({ message: 'An unexpected error occurred', status: 500 });
-        }
+        return NextResponse.json({ message: 'An unexpected error occurred', status: 500 });
     }
 }

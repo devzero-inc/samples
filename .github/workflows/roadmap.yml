@@ -28,12 +28,12 @@ jobs:
         cd roadmap-voting-app
         npm install
 
-    # - name: Lint
-    #   run: |
-    #     cd roadmap-voting-app
-    #     npm run lint
+    - name: Lint
+      run: |
+        cd roadmap-voting-app
+        npm run lint
 
-    # - name: Run Tests
-    #   run: |
-    #     cd roadmap-voting-app
-    #     npm test
+    - name: Run Tests
+      run: |
+        cd roadmap-voting-app
+        npm test

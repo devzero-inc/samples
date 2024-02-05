@@ -5,6 +5,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PollOutlinedIcon from '@mui/icons-material/PollOutlined';
 import React, { useState, useEffect } from 'react';
+import { getVotes, doVote } from '@/http/api';
 
 interface PostProps {
     id?: string,
@@ -45,15 +46,10 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
     }, [target])
 
     useEffect(() => {
-        fetch(`/api/posts?postId=${id}`, {
-            method: "POST",
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setVotes(data.votes);
-            })
-            .catch((err) => console.log(err));
+        const votesresponse = getVotes(id);
+        votesresponse.then((data) => {
+            setVotes(data);
+        }).catch((err) => console.log(err));
     }, [id])
 
     const getStatusColor = (status: string): string => {
@@ -80,40 +76,26 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
         }
         const userID = session?.user?.id;
         const token = session?.access_token;
-        console.log(token);
 
         if (userID && id) {
 
-            const formData = new FormData();
-            formData.append('postId', id);
-            formData.append('userId', userID);
-            formData.append('type', type);
+            const voteResponse = doVote(token, id, userID, type);
+            voteResponse.then((data) => {
+                if (data.status === 200) {
+                    setVotes(prev => {
+                        if(prev){
+                            return [...prev, data.data]
+                        }
+                        return [data.data]
+                    });
+                }
+            }).catch((err) => console.log(err));
 
-            fetch(`/api/vote`, {
-                method: 'POST',
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                },
-                body: formData,
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                    if (data.status === 200) {
-                        setVotes(prev => {
-                            if(prev){
-                                return [...prev, data.data]
-                            }
-                            return [data.data]
-                        });
-                    }
-                })
-                .catch((err) => console.log(err));
         }
     }
 
     return (
-        <div className={` flex border-y border-y-cusBorder items-center h-44 bg-cusSec  text-white ${isLast ? "rounded-br-lg rounded-bl-lg" : ""}`}>
+        <div className={` flex border border-cusBorderSec items-center h-44 bg-cusWhite  text-cusBorderSec ${isLast ? "rounded-br-lg rounded-bl-lg" : ""}`}>
             <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full border-r border-cusBorder">
                 <div>
                     <WarningIcon className=' cursor-pointer' onClick={() => { vote('urgent') }} />
@@ -123,21 +105,21 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
                     <KeyboardArrowDownIcon className=' scale-150 cursor-pointer' onClick={() => { vote('meh') }} />
                 </div>
             </div>
-            <div className=" flex-1 h-full overflow-auto flex flex-col py-2 lg:py-5 px-4 justify-between border-l border-r border-cusBorder">
+            <div className=" flex-1 h-full overflow-auto flex flex-col py-2 lg:py-5 px-4 justify-between border-l border-r border-cusBorderSec">
                 <div className=''>
                     <div className='flex lg:items-center gap-2 lg:mb-2 text-nowrap flex-col lg:flex-row'>
                         {status &&
-                            <p className={`${getStatusColor(status)} px-2 rounded-lg w-fit`}>{status}</p>
+                            <p className={`${getStatusColor(status)} px-2 rounded-lg w-fit text-cusWhite`}>{status}</p>
                         }
                         <p className=' font-bold text-lg text-wrap'>{title}</p>
                     </div>
-                    <p className='text-sm text-gray-400 overflow-ellipsis'>
+                    <p className='text-sm text-gray-900 overflow-ellipsis'>
                         {description}
                     </p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <p className=' hidden md:block text-sm lg:text-[1rem]'>Target Release:</p>
-                    <span className=' text-sm lg:text-[1rem] bg-custom-gradient px-2 py-1 rounded-lg text-nowrap'>{displayDate}</span>
+                    <span className=' text-sm lg:text-[1rem] bg-custom-gradient px-2 py-1 rounded-lg text-nowrap text-cusWhite'>{displayDate}</span>
                 </div>
             </div>
             <div className=" flex-2 flex flex-col items-center justify-around py-5 px-4 h-full border-l border-cusBorder">

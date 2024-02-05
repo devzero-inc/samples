@@ -43,4 +43,20 @@ describe('POST api/posts', () => {
         expect(result.status).toBe(200);
     });
 
+    it('should return 500 error if an unexpected error occurs', async () => {
+        (getPosts as jest.Mock).mockResolvedValueOnce({ data: null, error: 'error connecting to supabase' });
+        (getVotes as jest.Mock).mockResolvedValueOnce({ data: null, error: 'error connecting to supabase' });
+
+        const mockRequest = createMockRequest(null);
+        const result = await POST(mockRequest);
+        const jsonResponse = await result.json();
+
+        expect(jsonResponse).toEqual(
+            {
+                message: 'An unexpected error occurred',
+                status: 500,
+            }
+        );
+    });
+
 });

@@ -1,4 +1,4 @@
-# Roadmap Voting App
+# Roadmap Voting App ![ workflow](https://github.com/devzero-inc/samples/actions/workflows/roadmap.yml/badge.svg)
 
 ## Overview
 A roadmap voting app that democratizes the development process by enabling authenticated users to influence a project's trajectory. Through a simple and intuitive interface, users can vote on proposed features, track the progress of development items, and see at a glance which enhancements are up next or already completed. This platform ensures that every voice is heard and that the project aligns closely with the community's most valued feedback and needs.

@@ -1,21 +1,3 @@
-# FROM node:20-alpine
-
-# RUN apk add --no-cache docker-cli
-
-# WORKDIR /app
-
-# COPY package*.json ./
-
-# RUN npm install
-
-# COPY . .
-
-# RUN chmod +x /app/entrypoint.sh
-
-# EXPOSE 3000
-
-# ENTRYPOINT ["/app/entrypoint.sh"]
-
 # Use Docker's official image as the base
 FROM docker:20-dind
 

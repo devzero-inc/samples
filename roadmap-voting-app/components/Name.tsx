@@ -15,22 +15,13 @@ const Name = () => {
             }
         };
 
-        // Load name initially and on custom storage update events
         loadName();
         window.addEventListener("storageUpdate", loadName);
 
-        // Clean up the event listener
         return () => {
             window.removeEventListener("storageUpdate", loadName);
         };
     }, []);
-
-    // useEffect(() => {
-    //     const name: string | null = localStorage.getItem("name");
-    //     if (name) {
-    //         setName(name);
-    //     }
-    // }, [])
 
     return (
         <div>
@@ -40,12 +31,12 @@ const Name = () => {
                 <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 items-center px-4">
 
                     <Link href="/auth/signin" className="outline-none">
-                        <button className="bg-custom-gradient text-sm md:text-md lg:text-lg px-2 py-1 lg:px-4 lg:py-2 rounded-full w-24 lg:w-32 lg:font-bold">
+                        <button className="bg-custom-gradient text-white text-sm md:text-md lg:text-lg px-2 py-1 lg:px-4 lg:py-2 rounded-full w-24 lg:w-32 lg:font-bold">
                             Sign in
                         </button>
                     </Link>
                     <Link href="/auth/signup" className="outline-none">
-                        <button className="bg-custom-gradient text-sm md:text-md lg:text-lg px-2 py-1 lg:px-4 lg:py-2 rounded-full w-24 lg:w-32 lg:font-bold">
+                        <button className="bg-custom-gradient text-white text-sm md:text-md lg:text-lg px-2 py-1 lg:px-4 lg:py-2 rounded-full w-24 lg:w-32 lg:font-bold">
                             Sign up
                         </button>
                     </Link>

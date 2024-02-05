@@ -3,7 +3,6 @@ import { NextRequest } from 'next/server';
 
 export async function authenticate(req: NextRequest) {
     const token = req.headers.get('Authorization')?.split(' ')[1];
-    // spelling dekhio 
     if (!token) {
         throw new Error('No token provided');
     }
