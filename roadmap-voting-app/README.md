@@ -13,10 +13,6 @@ A roadmap voting app that democratizes the development process by enabling authe
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 
-## Todo
-1. Dockerizing
-1. Testing
-
 ## Features
 - **User Authentication:** Secure signup and sign-in capabilities to ensure a personalized and secure voting experience.
 - **Voting System:** Users can cast their votes on feature proposals, influencing the priority of the project's development roadmap.
