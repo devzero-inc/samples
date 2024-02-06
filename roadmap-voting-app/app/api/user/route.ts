@@ -4,18 +4,15 @@ import { supabase } from '../../../lib/supabaseClient';
 export async function POST(req: NextRequest) {
     try {
         const login = req.nextUrl.searchParams.get("login") as string;
+        const formdata = await req.formData();
+        const email = formdata.get("email") as string;
+        const password = formdata.get("password") as string;
         if (login) {
-            const formdata = await req.formData();
-            const email = formdata.get("email") as string;
-            const password = formdata.get("password") as string;
             const { data , error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
             return NextResponse.json({ message: "User logged in successfully", data: data, status: 200 });
         } else {
-            const formdata = await req.formData();
             const username = formdata.get("username") as string;
-            const email = formdata.get("email") as string;
-            const password = formdata.get("password") as string;
             
             console.log(username, email, password);
             if (!username) {
