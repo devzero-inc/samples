@@ -1,0 +1,39 @@
+name: Todo Nuxt App CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'todo-list-nuxt-app/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'todo-list-nuxt-app/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.x'
+
+    - name: Install Dependencies
+      run: |
+        cd roadmap-voting-app
+        npm install
+
+    # - name: Lint
+    #   run: |
+    #     cd roadmap-voting-app
+    #     npm run lint
+
+    # - name: Run Tests
+    #   run: |
+    #     cd roadmap-voting-app
+    #     npm test
