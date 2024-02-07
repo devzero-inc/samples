@@ -1,13 +1,13 @@
 <template>
-    <div class="bg-custom-blue rounded-md p-2 flex gap-2 items-center justify-between">
-        <p v-if="completed" class=" line-through">
-            {{ text }}
+    <div class=" text-sm lg:text-base bg-custom-blue rounded-md p-2 flex gap-2 items-center justify-between">
+        <p v-if="is_completed" class=" line-through">
+            {{ title }}
         </p>
         <p v-else>
-            {{ text }}
+            {{ title }}
         </p>
         <div class="flex gap-2">
-            <button @click="$emit('mark-as-done', id)" class="px-2 py-1 bg-green-700 hover:bg-green-600 rounded-md" v-show="!completed">Done</button>
+            <button @click="$emit('mark-as-done', id)" class="px-2 py-1 bg-green-700 hover:bg-green-600 rounded-md" v-show="!is_completed">Done</button>
             <button @click="deleteTodo" class="px-2 py-1 bg-red-700 hover:bg-red-600 rounded-md">Delete</button>
         </div>
     </div>
@@ -18,16 +18,16 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
-        text: {
+        title: {
             type: String,
             required: true
         },
         id: {
-            type: Number,
+            type: String,
             required: true
         },
-        completed: {
-            type: Boolean,
+        is_completed: {
+            type: Number,
             required: true
         }
     },

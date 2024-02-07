@@ -3,19 +3,19 @@
 ## Overview
 This todo app offers a minimalist approach to task management, focusing on core functionalities that allow users to add, remove, and mark tasks as done. Designed with simplicity and ease of use in mind, it provides a clutter-free environment to help users concentrate on their tasks without unnecessary features. Whether it's for daily chores, work assignments, or personal goals, the app facilitates a straightforward way to keep track of tasks, ensuring users can effectively manage their to-dos and stay organized.
 
-![Alt Text](https://i.imgur.com/e43SQjZ.png)
+![Alt Text](https://i.imgur.com/Vi4JNhm.png)
 
 ## Table of contents
 - [Todo](#todo)
 - [Features](#features)
+- [High level design](#high-level-design)
 - [Technologies Used](#technologies-used)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 
 ## Todo
 
-1. Design HLD
-1. Integrate frontend with backend routes
+1. Write Unit tests
 1. Dockerize the app
 
 ## Features
@@ -28,6 +28,10 @@ This todo app offers a minimalist approach to task management, focusing on core 
 
 **Mark Done:** Users can mark tasks as completed, providing a satisfying way to track progress and maintain motivation by visually acknowledging accomplishments.
 
+## High Level Design
+![Alt Text](https://i.imgur.com/YtRFVzB.png)
+
+The Todo-List-Nuxt-App delivers a streamlined task management experience, powered by Nuxt.js for the frontend, and a robust Backend API connected to a MySQL database. Utilizing a clear schema, the app enables users to effortlessly manage their tasks with CRUD operations. Interactions from the frontend trigger API calls, ensuring the UI is consistently synchronized with the backend, thus providing a dynamic and responsive environment for the users to track and update their tasks in real time.
 
 ## Technologies Used   
 
