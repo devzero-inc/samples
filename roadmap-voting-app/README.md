@@ -3,7 +3,7 @@
 ## Overview
 A roadmap voting app that democratizes the development process by enabling authenticated users to influence a project's trajectory. Through a simple and intuitive interface, users can vote on proposed features, track the progress of development items, and see at a glance which enhancements are up next or already completed. This platform ensures that every voice is heard and that the project aligns closely with the community's most valued feedback and needs.
 
-![Alt Text](https://i.imgur.com/TvgsZFZ.png)
+![Alt Text](https://i.imgur.com/z4eX0lD.png)
 
 ## Table of contents
 - [Todo](#todo)
