@@ -32,22 +32,8 @@ export const deleteTask = async (data: Pick<todolist, 'id'>) => {
         throw error;
     }
 };
-export const detail = async (id: string) => {
-    try {
-        const result = await sql({
-            query: 'SELECT id, title, created_at FROM tasks WHERE id=?',
-            values: [id]
-        })
 
-        return result;
-    } catch (error) {
-        console.error('Error fetching task:', error);
-        throw error;
-    }
-};
-
-
-export const updateTask = async (id: number) => {
+export const updateTask = async (data: Pick<todolist, 'id'>) => {
     try {
         await sql({
             query: `
@@ -55,7 +41,7 @@ export const updateTask = async (id: number) => {
                 SET is_completed = true
                 WHERE id = ?
             `,
-            values: [id]
+            values: [data.id]
         });
 
         return { message: 'Task updated successfully' };

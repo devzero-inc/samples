@@ -32,7 +32,12 @@
 //     "node_modules"
 //   ]
 // }
-
 {
   "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "node"
+    ],
+  }
 }
