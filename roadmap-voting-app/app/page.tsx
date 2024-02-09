@@ -23,7 +23,6 @@ export default function Home() {
     fetch("/api/post")
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         setPosts(data.posts);
       })
       .catch((err) => console.log(err));

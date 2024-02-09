@@ -118,7 +118,7 @@ async function insertPosts() {
             console.error('Error:', error);
             break;
         } else {
-            console.log('Inserted:', data);
+            console.log('Inserted');
         }
     }
 }

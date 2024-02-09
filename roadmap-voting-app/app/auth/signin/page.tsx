@@ -23,7 +23,6 @@ const SignIn = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 localStorage.setItem("session", JSON.stringify(data.data.session));
                 localStorage.setItem("name", data.userData.name);
                 window.dispatchEvent(new Event("storageUpdate"));

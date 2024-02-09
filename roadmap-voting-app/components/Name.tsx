@@ -15,11 +15,9 @@ const Name = () => {
             }
         };
 
-        // Load name initially and on custom storage update events
         loadName();
         window.addEventListener("storageUpdate", loadName);
 
-        // Clean up the event listener
         return () => {
             window.removeEventListener("storageUpdate", loadName);
         };

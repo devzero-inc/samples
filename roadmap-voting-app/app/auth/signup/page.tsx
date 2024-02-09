@@ -23,7 +23,6 @@ const Signup = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             window.location.href = '/auth/signin';
         })
         .catch(err => console.log(err));

@@ -48,7 +48,6 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
         fetch(`/api/post?postId=${id}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setVotes(data.votes);
             })
             .catch((err) => console.log(err));
@@ -95,7 +94,6 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
                     if (data.status === 200) {
                         setVotes(prev => {
                             if(prev){
