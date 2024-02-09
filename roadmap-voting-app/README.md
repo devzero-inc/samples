@@ -3,10 +3,9 @@
 ## Overview
 A roadmap voting app that democratizes the development process by enabling authenticated users to influence a project's trajectory. Through a simple and intuitive interface, users can vote on proposed features, track the progress of development items, and see at a glance which enhancements are up next or already completed. This platform ensures that every voice is heard and that the project aligns closely with the community's most valued feedback and needs.
 
-![Alt Text](https://i.imgur.com/TvgsZFZ.png)
+![Alt Text](https://i.imgur.com/mJ9jW9E.png)
 
 ## Table of contents
-- [Todo](#todo)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [High Level Design](#high-level-design)
@@ -39,7 +38,6 @@ The Roadmap Voting App offers an intuitive and collaborative platform for users 
 **Backend + Frontend:** We've chosen Next.js for its seamless integration of frontend and backend capabilities, providing a cohesive development experience. This is complemented by Tailwind CSS for styling, offering a utility-first approach that enables rapid and responsive design implementations.
 
 ### Prerequisites
-- Nodejs
 - Docker
 
 ## Installation
@@ -48,10 +46,7 @@ Run locally:
 ```bash
 git clone https://github.com/devzero-inc/samples.git
 cd samples/roadmap-voting-app
-npm install
-npx supabase init
-npx supabase start
-npm run start app
+docker compose up
 ```
 App will be running on ```PORT:3000``` -> [http://localhost:3000/](http://localhost:3000/)
 

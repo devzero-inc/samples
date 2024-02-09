@@ -4,10 +4,10 @@ import { signInWithSupabase, getUserFromSupabase, signUpWithSupabase, insertUser
 export async function POST(req: NextRequest) {
     try {
         const login = req.nextUrl.searchParams.get("login") as string;
+        const formdata = await req.formData();
+        const email = formdata.get("email") as string;
+        const password = formdata.get("password") as string;
         if (login) {
-            const formdata = await req.formData();
-            const email = formdata.get("email") as string;
-            const password = formdata.get("password") as string;
 
             const signInresponse = await signInWithSupabase(email, password);
 
@@ -18,10 +18,7 @@ export async function POST(req: NextRequest) {
             if (userError) throw userError;
             return NextResponse.json({ message: "User logged in successfully", data: signInresponse.data, userData: userData, status: 200 });
         } else {
-            const formdata = await req.formData();
             const username = formdata.get("name") as string;
-            const email = formdata.get("email") as string;
-            const password = formdata.get("password") as string;
 
             if (!username) {
                 return NextResponse.json({ message: 'Username is required', status: 400 });
@@ -34,7 +31,6 @@ export async function POST(req: NextRequest) {
             }
 
             const signUpResponse = await signUpWithSupabase(email, password);
-            // if (signUpResponse.error) throw signUpResponse.error;
 
             if (signUpResponse.user && signUpResponse.userID) {
                 const { error: insertError } = await insertUserToSupabase(signUpResponse.userID, username, email);
