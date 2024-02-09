@@ -8,13 +8,22 @@ export async function POST(req: NextRequest) {
         const email = formdata.get("email") as string;
         const password = formdata.get("password") as string;
         if (login) {
-            const { data , error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-            return NextResponse.json({ message: "User logged in successfully", data: data, status: 200 });
+            const signInresponse = await supabase.auth.signInWithPassword({ email, password });
+            if (signInresponse.error) throw signInresponse.error;
+
+            const userId = signInresponse.data.user.id;
+
+            const { data: userData, error: userError } = await supabase
+                .from('userstable')
+                .select('*')
+                .eq('id', userId)
+                .single();
+
+            if (userError) throw userError;
+            return NextResponse.json({ message: "User logged in successfully", data: signInresponse.data, userData: userData, status: 200 });
         } else {
-            const username = formdata.get("username") as string;
+            const username = formdata.get("name") as string;
             
-            console.log(username, email, password);
             if (!username) {
                 return NextResponse.json({ message: 'Username is required', status: 400 });
             }
@@ -28,10 +37,16 @@ export async function POST(req: NextRequest) {
             const signUpResponse = await supabase.auth.signUp({ email, password });
             if (signUpResponse.error) throw signUpResponse.error;
 
-            return NextResponse.json({ message: "user created successfuly", data:signUpResponse.data , status: 200 });
+            if (signUpResponse.data.user) {
+                const { error: insertError } = await supabase
+                    .from('userstable')
+                    .insert([{ id: signUpResponse.data.user.id, name: username, email: email }]);
+                if (insertError) throw insertError;
+            }
+
+            return NextResponse.json({ message: "user created successfuly", data:signUpResponse.data, status: 200 });
         }
     } catch (error) {
-        // console.log(error);
         if (error instanceof Error) {
             return NextResponse.json({ message: error.message, status: 401 });
         } else {

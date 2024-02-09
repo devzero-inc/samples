@@ -4,8 +4,11 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb:15 11 41 ;
-  --background-end-rgb: 15 11 41;
+  /* --background-start-rgb:15 11 41 ;
+  --background-end-rgb: 15 11 41; */
+  --background-start-rgb:243,239,254 ;
+  --background-end-rgb: 243,239,254;
+  /* 164,179,182 */
   /* background-color: rgb(121, 33, 146); */
 }
 
