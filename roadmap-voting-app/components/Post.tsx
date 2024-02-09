@@ -78,7 +78,6 @@ const Post: React.FC<PostProps> = ({ id, title, description, status, target, isL
         }
         const userID = session?.user?.id;
         const token = session?.access_token;
-        console.log(token);
 
         if (userID && id) {
 
