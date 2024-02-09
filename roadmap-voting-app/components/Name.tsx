@@ -25,13 +25,6 @@ const Name = () => {
         };
     }, []);
 
-    // useEffect(() => {
-    //     const name: string | null = localStorage.getItem("name");
-    //     if (name) {
-    //         setName(name);
-    //     }
-    // }, [])
-
     return (
         <div>
             {name ?
