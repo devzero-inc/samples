@@ -48,7 +48,7 @@ describe('POST /api/add-task', () => {
 
     it('should return status 500 if database is not connected', async () => {
         (readBody as jest.Mock).mockResolvedValueOnce({ title: 'Test Todo' });
-        (addTask as jest.Mock).mockResolvedValueOnce(null);
+        (addTask as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
         const mockEvent = createMockEvent({ title: 'Test Todo' });
 
         const response = await defineEventHandler1(mockEvent);
@@ -74,7 +74,7 @@ describe('GET /api/get-task', () => {
     });
 
     it('should return status 500 if database is not connected', async () => {
-        (getTask as jest.Mock).mockResolvedValueOnce(null);
+        (getTask as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
         const mockEvent = createMockEvent(null);
 
         const response = await defineEventHandler2(mockEvent);
@@ -102,7 +102,7 @@ describe('POST /api/delete-task', () => {
 
     it('should return status 500 if database is not connected', async () => {
         (readBody as jest.Mock).mockResolvedValueOnce({ id: '123' });
-        (deleteTask as jest.Mock).mockResolvedValueOnce(false);
+        (deleteTask as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
         const mockEvent = createMockEvent({ id: '123' });
 
         const response = await defineEventHandler3(mockEvent);
@@ -130,7 +130,7 @@ describe('PUT /api/update-task', () => {
 
     it('should return status 500 if database is not connected', async () => {
         (readBody as jest.Mock).mockResolvedValueOnce({ id: '123' });
-        (updateTask as jest.Mock).mockResolvedValueOnce(null);
+        (updateTask as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
         const mockEvent = createMockEvent({ id: '123' });
 
         const response = await defineEventHanlder4(mockEvent);

@@ -25,7 +25,7 @@
         </form>
         <ul v-if="todos" class="flex flex-col gap-2 w-full overflow-auto flex-1">
           <li class=" w-full" v-for="todo in todos" :key="todo.id">
-            <Todo :title="todo.title" :id="todo.id" :is_completed="todo.is_completed" @delete-todo="deleteTodo" @mark-as-done="markAsDone"/>
+            <Task :title="todo.title" :id="todo.id" :is_completed="todo.is_completed" @delete-todo="deleteTodo" @mark-as-done="markAsDone"/>
           </li>
         </ul>
       </div>

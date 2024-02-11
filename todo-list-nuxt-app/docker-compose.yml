@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db 
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=password
+      - DB_NAME=todolist
+      - DB_USER=root
+
+  db:
+    image: mysql:latest 
+    environment:
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: todolist
+    ports:
+      - "3307:3306"
+    volumes:  
+      - db-data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+
+volumes:
+  db-data:        
