@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import type { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {
@@ -21,7 +20,3 @@ const config: NuxtConfig = {
 }
 
 export default config
-
-// export default defineNuxtConfig({
-//   devtools: { enabled: true }
-// })

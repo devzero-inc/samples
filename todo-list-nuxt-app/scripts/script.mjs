@@ -71,7 +71,6 @@ async function insertTodos() {
         "INSERT INTO tasks ( title) VALUES (?)",
         [task.title]
       );
-      console.log("Inserted:", rows);
     }
     connection.release();
   } catch (error) {
@@ -86,6 +85,7 @@ async function insertTodos() {
   try {
     pool = await connectWithRetry(dbConfig);
     await insertTodos();
+    console.log("Database seeded successfully");
   } catch (error) {
     console.log(error);
   } finally {

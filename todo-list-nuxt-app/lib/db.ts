@@ -4,7 +4,7 @@ dotenv.config();
 
 interface Options {
   query: string;
-  values?: any[];
+  values?: (string | number | boolean | Date | Buffer | null)[];
 }
 
 const pool = mysql.createPool({

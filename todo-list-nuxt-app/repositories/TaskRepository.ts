@@ -1,18 +1,10 @@
 import { sql } from '../lib/db';
+import { TaskNotFoundError, UnhandledError, TableNotFoundError } from '../errors/databaseerror';
 
 export type todolist = {
     id: number;
     title: string;
     created_date: string
-}
-
-class CustomError extends Error {
-    code: string;
-
-    constructor(message: string, code: string) {
-        super(message);
-        this.code = code;
-    }
 }
 
 export const addTask = async (data: Pick<todolist, 'title'>) => {
@@ -26,10 +18,10 @@ export const addTask = async (data: Pick<todolist, 'title'>) => {
     } catch (error) {
         console.error('Error adding task:', error);
         if((error as { code: string }).code === 'ER_NO_SUCH_TABLE') {
-            throw new CustomError('Table not found', 'ER_NO_SUCH_TABLE');
+            throw new TableNotFoundError('Table not found');
         }
         else{
-            throw new CustomError('Internal server error', 'UNHANDLED_ERROR');
+            throw new UnhandledError('Internal server error');
         }
     }
 }
@@ -41,7 +33,7 @@ export const deleteTask = async (data: Pick<todolist, 'id'>) => {
             values: [data.id]
         });
         if(Array.isArray(check) && check.length === 0){
-            throw new CustomError('Task not found', 'NOT_FOUND');
+            throw new TaskNotFoundError('Task not found');
         } 
 
         const result = await sql({
@@ -52,10 +44,10 @@ export const deleteTask = async (data: Pick<todolist, 'id'>) => {
     } catch (error) {
         console.error('Error getting task:', error);
         if((error as { code: string }).code === 'ER_NO_SUCH_TABLE') {
-            throw new CustomError('Table not found', 'ER_NO_SUCH_TABLE');
+            throw new TableNotFoundError('Table not found');
         }
         else{
-            throw new CustomError('Internal server error', 'UNHANDLED_ERROR');
+            throw new UnhandledError('Internal server error');
         }
     }
 };
@@ -67,7 +59,7 @@ export const updateTask = async (data: Pick<todolist, 'id'>) => {
             values: [data.id]
         });
         if(Array.isArray(check) && check.length === 0){
-            throw new CustomError('Task not found', 'NOT_FOUND');
+            throw new TaskNotFoundError('Task not found');
         } 
 
         await sql({
@@ -83,10 +75,10 @@ export const updateTask = async (data: Pick<todolist, 'id'>) => {
     } catch (error) {
         console.error('Error getting task:', error);
         if((error as { code: string }).code === 'ER_NO_SUCH_TABLE') {
-            throw new CustomError('Table not found', 'ER_NO_SUCH_TABLE');
+            throw new TableNotFoundError('Table not found');
         }
         else{
-            throw new CustomError('Internal server error', 'UNHANDLED_ERROR');
+            throw new UnhandledError('Internal server error');
         }
     }
 };
@@ -101,10 +93,10 @@ export const getTask = async () => {
     } catch (error) {
         console.error('Error getting task:', error);
         if((error as { code: string }).code === 'ER_NO_SUCH_TABLE') {
-            throw new CustomError('Table not found', 'ER_NO_SUCH_TABLE');
+            throw new TableNotFoundError('Table not found');
         }
         else{
-            throw new CustomError('Internal server error', 'UNHANDLED_ERROR');
+            throw new UnhandledError('Internal server error');
         }
     }
 }

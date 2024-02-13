@@ -42,19 +42,13 @@ describe('fetchTasks', () => {
         expect(result).toEqual(tasks);
     });
 
-    it('should return null and log an error on fetch failure', async () => {
+    it('should throw an error on fetch failure', async () => {
         const error = new Error('Network error');
         mockedAxios.get.mockRejectedValueOnce(error);
 
-        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        const result = await fetchTasks();
+        await expect(fetchTasks()).rejects.toThrow(error);
 
         expect(mockedAxios.get).toHaveBeenCalledWith('/api/get-task');
-        expect(result).toBeNull();
-        expect(errorSpy).toHaveBeenCalledWith('Failed to fetch todos', error);
-
-        errorSpy.mockRestore();
     });
 });
 
@@ -65,30 +59,22 @@ describe('addTask', () => {
 
     it('should add a task successfully', async () => {
         const title = 'New Task';
-
         mockedAxios.post.mockResolvedValueOnce({});
-
-        const result = await addTask(title);
-
+        
+        await expect(addTask(title)).resolves.toBeUndefined();
+        
         expect(mockedAxios.post).toHaveBeenCalledWith('/api/add-task', { title });
-        expect(result).toBeUndefined();
     });
 
-    it('should return null and log an error on failure to add task', async () => {
+    it('should throw an error on failure to add task', async () => {
         const title = 'New Task';
-
         const error = new Error('Network error');
+        
         mockedAxios.post.mockRejectedValueOnce(error);
-
-        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        const result = await addTask(title);
-
+        
+        await expect(addTask(title)).rejects.toThrow(error);
+        
         expect(mockedAxios.post).toHaveBeenCalledWith('/api/add-task', { title });
-        expect(result).toBeNull();
-        expect(errorSpy).toHaveBeenCalledWith('Failed to add task', error);
-
-        errorSpy.mockRestore();
     });
 });
 
@@ -99,30 +85,21 @@ describe('updateTask', () => {
 
     it('should update a task successfully', async () => {
         const id = '1';
-
         mockedAxios.put.mockResolvedValueOnce({});
-
-        const result = await updateTask(id);
+        
+        await expect(updateTask(id)).resolves.toBeUndefined();
 
         expect(mockedAxios.put).toHaveBeenCalledWith('/api/update-task', { id });
-        expect(result).toBeUndefined();
     });
 
-    it('should return null and log an error on failure to update task', async () => {
+    it('should throw an error on failure to update task', async () => {
         const id = '1';
-
         const error = new Error('Network error');
         mockedAxios.put.mockRejectedValueOnce(error);
 
-        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        const result = await updateTask(id);
+        await expect(updateTask(id)).rejects.toThrow(error);
 
         expect(mockedAxios.put).toHaveBeenCalledWith('/api/update-task', { id });
-        expect(result).toBeNull();
-        expect(errorSpy).toHaveBeenCalledWith('Failed to update task', error);
-
-        errorSpy.mockRestore();
     });
 });
 
@@ -133,29 +110,20 @@ describe('deleteTask', () => {
 
     it('should delete a task successfully', async () => {
         const id = '1';
-
         mockedAxios.post.mockResolvedValueOnce({});
-
-        const result = await deleteTask(id);
+        
+        await expect(deleteTask(id)).resolves.toBeUndefined();
 
         expect(mockedAxios.post).toHaveBeenCalledWith('/api/delete-task', { id });
-        expect(result).toBeUndefined();
     });
 
-    it('should return null and log an error on failure to delete task', async () => {
+    it('should throw an error on failure to delete task', async () => {
         const id = '1';
-
         const error = new Error('Network error');
         mockedAxios.post.mockRejectedValueOnce(error);
 
-        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        const result = await deleteTask(id);
+        await expect(deleteTask(id)).rejects.toThrow(error);
 
         expect(mockedAxios.post).toHaveBeenCalledWith('/api/delete-task', { id });
-        expect(result).toBeNull();
-        expect(errorSpy).toHaveBeenCalledWith('Failed to delete task', error);
-
-        errorSpy.mockRestore();
     });
 });

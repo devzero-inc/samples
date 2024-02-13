@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "node script.mjs && node .output/server/index.mjs",
+    "start": "node scripts/script.mjs && node .output/server/index.mjs",
     "lint": "eslint .",
     "test": "jest"
   },
@@ -17,8 +17,7 @@
     "eslint": "^8.56.0",
     "mysql2": "^3.9.1",
     "nuxt": "^3.10.1",
-    "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue": "^3.4.15"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",

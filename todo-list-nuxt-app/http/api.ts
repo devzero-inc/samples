@@ -8,38 +8,38 @@ interface Task {
 }
 
 export const fetchTasks = async (): Promise<Task[] | null> => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await axios.get('/api/get-task');
         return response.data.tasks || null;
     } catch (error) {
-        console.error('Failed to fetch todos', error);
-        return null;
+        throw error;
     }
 };
 
 export const addTask = async (title: string) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const response = await axios.post('/api/add-task', { title: title });
+        await axios.post('/api/add-task', { title: title });
     } catch (error) {
-        console.error('Failed to add task', error);
-        return null;
+        throw error;
     }
 };
 
 export const updateTask = async (id: string) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const response = await axios.put('/api/update-task', { id: id});
+        await axios.put('/api/update-task', { id: id});
     } catch (error) {
-        console.error('Failed to update task', error);
-        return null;
+        throw error;
     }
 }
 
 export const deleteTask = async (id: string) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const response = await axios.post('/api/delete-task', { id: id });
+        await axios.post('/api/delete-task', { id: id });
     } catch (error) {
-        console.error('Failed to delete task', error);
-        return null;
+        throw error;
     }
 }

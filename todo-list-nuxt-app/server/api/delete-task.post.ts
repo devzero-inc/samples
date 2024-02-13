@@ -1,5 +1,6 @@
 import { defineEventHandler, readBody } from 'h3';
-import { deleteTask } from '../../package/TaskRepository';
+import { deleteTask } from '../../repositories/TaskRepository';
+import { TableNotFoundError, TaskNotFoundError, UnhandledError } from '../../errors/databaseerror';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -10,26 +11,24 @@ export default defineEventHandler(async (event) => {
             return {
                 status: 200,
                 message: 'Deleted successfully'
-            }
+            };
         }
-    }catch(err) {
-        if((err as { code: string }).code === 'ER_NO_SUCH_TABLE') {
+    } catch (err) {
+        if (err instanceof TableNotFoundError) {
             return {
                 status: 503,
-                message: 'Task not found.'
-            }
-        }
-        else if((err as { code: string }).code === 'NOT_FOUND') {
+                message: err.message
+            };
+        } else if (err instanceof TaskNotFoundError) {
             return {
                 status: 404,
-                message: 'Task not found.'
-            }
-        }
-        else {
+                message: err.message
+            };
+        } else if (err instanceof UnhandledError) {
             return {
                 status: 500,
-                message: 'Internal server error.'
-            }
+                message: err.message
+            };
         }
     }
 });

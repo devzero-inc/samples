@@ -1,30 +1,29 @@
 import { defineEventHandler, readBody } from 'h3';
-import {addTask} from '../../package/TaskRepository';
+import { addTask } from '../../repositories/TaskRepository';
+import { TableNotFoundError, UnhandledError } from '../../errors/databaseerror';
 
 export default defineEventHandler(async (event) => {
-    try{
-
+    try {
         const body = await readBody(event);
         const title = body.title;
         const todo = await addTask({ title });
-        if(todo) {
+        if (todo) {
             return {
                 status: 200,
-                message:  'Todo added successfully'
-            }
+                message: 'Todo added successfully'
+            };
         }
-    } catch(err) {
-        if((err as { code: string }).code === 'ER_NO_SUCH_TABLE') {
+    } catch (err) {
+        if (err instanceof TableNotFoundError) {
             return {
                 status: 503,
-                message: 'Table not found.'
-            }
-        }
-        else {
+                message: err.message
+            };
+        } else if (err instanceof UnhandledError) {
             return {
                 status: 500,
-                message: 'Internal server error.'
-            }
+                message: err.message
+            };
         }
     }
-})
+});

@@ -14,7 +14,7 @@ export default {
         'radial-gradient': 'radial-gradient(circle, var(--tw-gradient-stops))',
         'custom-gradient': 'linear-gradient(to right, #e73c9f, #a032c6, #4125f8)',
       },
-      gradientColorStops: theme => ({
+      gradientColorStops: () => ({
         'primary': '#6e1074', // Example color
         'between': '#4a0e58',
         'secondary': '#1f0b35', // Example color
