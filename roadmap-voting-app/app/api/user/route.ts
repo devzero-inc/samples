@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '../../../lib/supabaseClient';
+import { signInWithSupabase, getUserFromSupabase, signUpWithSupabase, insertUserToSupabase } from '../../../utils/controller';
 
 export async function POST(req: NextRequest) {
     try {
@@ -8,22 +8,18 @@ export async function POST(req: NextRequest) {
         const email = formdata.get("email") as string;
         const password = formdata.get("password") as string;
         if (login) {
-            const signInresponse = await supabase.auth.signInWithPassword({ email, password });
-            if (signInresponse.error) throw signInresponse.error;
 
-            const userId = signInresponse.data.user.id;
+            const signInresponse = await signInWithSupabase(email, password);
 
-            const { data: userData, error: userError } = await supabase
-                .from('userstable')
-                .select('*')
-                .eq('id', userId)
-                .single();
+            const userId = signInresponse.userId;
+
+            const { data: userData, error: userError } = await getUserFromSupabase(userId);
 
             if (userError) throw userError;
             return NextResponse.json({ message: "User logged in successfully", data: signInresponse.data, userData: userData, status: 200 });
         } else {
             const username = formdata.get("name") as string;
-            
+
             if (!username) {
                 return NextResponse.json({ message: 'Username is required', status: 400 });
             }
@@ -34,23 +30,18 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json({ message: 'Password is required', status: 400 });
             }
 
-            const signUpResponse = await supabase.auth.signUp({ email, password });
-            if (signUpResponse.error) throw signUpResponse.error;
+            const signUpResponse = await signUpWithSupabase(email, password);
 
-            if (signUpResponse.data.user) {
-                const { error: insertError } = await supabase
-                    .from('userstable')
-                    .insert([{ id: signUpResponse.data.user.id, name: username, email: email }]);
+            if (signUpResponse.user && signUpResponse.userID) {
+                const { error: insertError } = await insertUserToSupabase(signUpResponse.userID, username, email);
+
                 if (insertError) throw insertError;
             }
 
-            return NextResponse.json({ message: "user created successfuly", data:signUpResponse.data, status: 200 });
+            return NextResponse.json({ message: "user created successfuly", data: signUpResponse.data, status: 200 });
         }
     } catch (error) {
-        if (error instanceof Error) {
-            return NextResponse.json({ message: error.message, status: 401 });
-        } else {
-            return NextResponse.json({ message: 'An unexpected error occurred', status: 500 });
-        }
+        console.error(error);
+        return NextResponse.json({ message: 'An unexpected error occurred', status: 500 });
     }
 }

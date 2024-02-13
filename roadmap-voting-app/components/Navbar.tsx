@@ -7,7 +7,7 @@ const Navbar = () => {
 
     
     return (
-        <div className="bg-cusSec w-[50%] text-white flex items-center justify-between mt-5 p-2 rounded-lg">
+        <div className="bg-cusWhite w-[50%] text-cusBorderSec border border-cusBorderSec flex items-center justify-between mt-5 p-2 rounded-lg">
             <div className="flex items-center">
                 <Link href="/" className="outline-none">
                     <Image
@@ -20,7 +20,7 @@ const Navbar = () => {
                 </Link>
                 <div>
                     <h1 className=" hidden sm:block text-lg sm:text-2xl md:text-3xl tracking-wide font-bold">DevZero</h1>
-                    <p className=" hidden sm:block text-[0.6rem] sm:text-[0.7rem] md:text-sm text-gray-400 text-center">Roadmap voting app</p>
+                    <p className=" hidden sm:block text-[0.6rem] sm:text-[0.7rem] md:text-sm text-gray-700 text-center">Roadmap voting app</p>
                 </div>
             </div>
             <Name/>

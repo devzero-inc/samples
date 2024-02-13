@@ -20,7 +20,9 @@ export default function Home() {
 
   useEffect(() => {
 
-    fetch("/api/post")
+    fetch("/api/posts", {
+      method: "POST",
+    })
       .then((res) => res.json())
       .then((data) => {
         setPosts(data.posts);
@@ -30,7 +32,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className=" w-[50%] flex flex-col mb-4">
+    <div className=" w-[50%] flex flex-col gap-1 mb-4">
       <Topbar />
 
       {posts && posts.map((ele: post, it: number): JSX.Element => (

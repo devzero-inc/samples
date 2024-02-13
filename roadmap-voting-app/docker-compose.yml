@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: nextjs-dind-app
+    privileged: true
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - /var/lib/docker
+    ports:
+      - '3000:3000'

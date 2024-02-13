@@ -17,6 +17,7 @@ const config: Config = {
       colors: {
         cusBg: "#0f0b29",
         cusSec: "#120d30",
+        cusWhite: "#F3ECFF",
         cusInput: "#261046",
         cusBorder: "#f3effe",
         cusBorderSec: "#5726A0",

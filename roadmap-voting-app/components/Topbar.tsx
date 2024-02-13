@@ -8,7 +8,7 @@ const Topbar = () => {
     const [selected, setSelected] = useState<string>("All");
 
     return (
-        <div className=" bg-cusSec w-full border-b border-b-cusBorder px-2 md:px-8 py-4 text-white rounded-tr-lg rounded-tl-lg flex items-center justify-between">
+        <div className=" bg-cusWhite w-full border border-cusBorderSec px-2 md:px-8 py-4 text-black rounded-tr-lg rounded-tl-lg flex items-center justify-between">
             <div className=" xl:flex hidden items-center gap-4 md:gap-4 lg:gap-8 ">
                 <div className=" border-b-4 border-b-cusBorderSec text-center">
                     All
